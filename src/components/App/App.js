@@ -97,7 +97,8 @@ const logos = {
 
 
 function App() {
-  const [swapPair, setSwapPair] = useState([{asset:'UST',amount:0},{asset:'LUNA'}]);
+  const [amountToSwap, setAmountToSwap] = useState(0);
+  const [swapPair, setSwapPair] = useState([{asset:'UST',amount:amountToSwap},{asset:'LUNA'}]);
   return (
     <div className='App'>
       <div className='App-header'>
@@ -105,12 +106,12 @@ function App() {
             <input  tabindex="1" placeholder="Swap Pair" type="text" />
             <div className='swap-container-input'>
                 <AssetToSwap asset={swapPair[0].asset} logo={logos[swapPair[0].asset]}
-                            owned={true}></AssetToSwap>
+                            owned={true} onChange={(e)=>setAmountToSwap(e.target.value)}></AssetToSwap>
                 <div className='arrow-container'>
                     <div className='arrow-button' onClick={()=>setSwapPair([swapPair[1],swapPair[0]])}>&rarr;</div>
                 </div>
                 <AssetToSwap asset={swapPair[1].asset} logo={logos[swapPair[1].asset]}
-                            owned={false} amount={1.20}></AssetToSwap>
+                            owned={false} amount={Math.round(amountToSwap*0.13*100)/100}></AssetToSwap>
             </div>
             <button tabindex="3" className='swap-button' type="button">SWAP</button>
         </div>
