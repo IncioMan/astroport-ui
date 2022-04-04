@@ -1,5 +1,6 @@
 import SwapSuggestionsContainer from '../SwapSuggestionsContainer/SwapSuggestionsContainer';
 import AssetToSwap from '../AssetToSwap/AssetToSwap';
+import React, { useState } from 'react';
 import './App.css';
 
 
@@ -84,24 +85,36 @@ const suggestions = [
     data: suggestedSwaps}
 ]
 
+const logos = {
+  'UST':'https://assets.terra.money/icon/60/UST.png',
+  'LUNA':'https://assets.terra.money/icon/60/Luna.png',
+  'wAVAX':'https://app.astroport.fi/tokens/avax.png',
+  'MINE':'https://assets.pylon.rocks/logo/MINE.png',
+  'bLUNA':'https://whitelist.anchorprotocol.com/logo/bLUNA.png',
+  'APOLLO':'https://d14knz87alb4l4.cloudfront.net/icons/APOLLO.png', 
+  'ANC': 'https://whitelist.anchorprotocol.com/logo/ANC.png' 
+}
+
+
 function App() {
+  const [swapPair, setSwapPair] = useState([{asset:'UST',amount:0},{asset:'LUNA'}]);
   return (
     <div className='App'>
       <div className='App-header'>
         <div className='asset-selection-container'>
             <input  tabindex="1" placeholder="Swap Pair" type="text" />
             <div className='swap-container-input'>
-                <AssetToSwap asset="UST" logo="https://assets.terra.money/icon/60/UST.png"
+                <AssetToSwap asset={swapPair[0].asset} logo={logos[swapPair[0].asset]}
                             owned={true}></AssetToSwap>
                 <div className='arrow-container'>
-                    <div className='arrow-button'>&rarr;</div>
+                    <div className='arrow-button' onClick={()=>setSwapPair([swapPair[1],swapPair[0]])}>&rarr;</div>
                 </div>
-                <AssetToSwap asset="LUNA" logo="https://assets.terra.money/icon/60/Luna.png"
+                <AssetToSwap asset={swapPair[1].asset} logo={logos[swapPair[1].asset]}
                             owned={false} amount={1.20}></AssetToSwap>
             </div>
             <button tabindex="3" className='swap-button' type="button">SWAP</button>
         </div>
-        <SwapSuggestionsContainer suggestions={suggestions}/>
+        <SwapSuggestionsContainer suggestions={suggestions} setSwapPair={setSwapPair}/>
       </div>
     </div>
   );
