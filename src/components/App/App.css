@@ -39,7 +39,6 @@ body {
 .arrow-container{
   display: flex;
   align-items: end;
-  padding-bottom: 10px;
 }
 
 .swap-container {
@@ -136,7 +135,7 @@ input.amount-input{
 
 .amount-calculated{
     width: 80px;   
-    padding-bottom: 8px;
+    padding-bottom: 3px;
     font-size: 34px; 
 }
 
