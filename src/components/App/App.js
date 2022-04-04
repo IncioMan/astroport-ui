@@ -23,12 +23,12 @@ function App() {
     <div className='App'>
       <div className='App-header'>
         <div className='asset-selection-container'>
-            <input placeholder="Swap Pair" type="text" />
+            <input  tabindex="1" placeholder="Swap Pair" type="text" />
             <div className='swap-container'>
                 <div className='asset-outer'>
                 <p>UST</p>
                 <div className='asset-container'>
-                1.500
+                <input  tabindex="2" className='amount-input' placeholder="0" type="text" />            
                 <img className='asset-logo' src="https://assets.terra.money/icon/60/UST.png" width="30" alt="Italian Trulli"></img>
                 </div>
             </div>
@@ -36,34 +36,34 @@ function App() {
                 <div>&rarr;</div>
             </div>
             <div className='asset-outer'>
-
                 <p>LUNA</p>
                 <div className='asset-container'>
-                1.20
+                <div className='amount-calculated'>1.20</div>
                 <img className='asset-logo' src="https://assets.terra.money/icon/60/Luna.png" width="30" alt="Italian Trulli"></img>
                 </div>
             </div>
             </div>
+            <button tabindex="3" className='swap-button' type="button">SWAP</button>
         </div>
         <div class="vl"></div>
         <div className='suggestions-container'>
           <div className='suggestion-category'>
             <p className='suggestion-category-name'>MOST POPULAR</p>
-            <div tabindex="1" className='suggest-container'>
+            <div tabindex="4" className='suggest-container'>
                 <p className='suggest-asset'>APOLLO</p>
                 <img className='suggest-logo' src="https://d14knz87alb4l4.cloudfront.net/icons/APOLLO.png" width="30" alt="Italian Trulli"></img>
                 <div className='suggest-arrow'>&rarr;</div>
                 <p className='suggest-asset'>UST</p>
                 <img className='suggest-logo' src="https://assets.terra.money/icon/60/UST.png" width="30" alt="Italian Trulli"></img>
               </div>
-              <div tabindex="2" className='suggest-container'>
+              <div tabindex="5" className='suggest-container'>
                 <p className='suggest-asset'>APOLLO</p>
                 <img className='suggest-logo' src="https://d14knz87alb4l4.cloudfront.net/icons/APOLLO.png" width="30" alt="Italian Trulli"></img>
                 <div className='suggest-arrow'>&rarr;</div>
                 <p className='suggest-asset'>UST</p>
                 <img className='suggest-logo' src="https://assets.terra.money/icon/60/UST.png" width="30" alt="Italian Trulli"></img>
               </div>
-              <div tabindex="3" className='suggest-container'>
+              <div tabindex="6" className='suggest-container'>
                 <p className='suggest-asset'>APOLLO</p>
                 <img className='suggest-logo' src="https://d14knz87alb4l4.cloudfront.net/icons/APOLLO.png" width="30" alt="Italian Trulli"></img>
                 <div className='suggest-arrow'>&rarr;</div>
