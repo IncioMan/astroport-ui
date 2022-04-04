@@ -94,7 +94,7 @@ function App() {
                 <AssetToSwap asset="UST" logo="https://assets.terra.money/icon/60/UST.png"
                             owned={true}></AssetToSwap>
                 <div className='arrow-container'>
-                    <div>&rarr;</div>
+                    <div className='arrow-button'>&rarr;</div>
                 </div>
                 <AssetToSwap asset="LUNA" logo="https://assets.terra.money/icon/60/Luna.png"
                             owned={false} amount={1.20}></AssetToSwap>
