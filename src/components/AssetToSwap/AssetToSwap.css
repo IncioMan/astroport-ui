@@ -1,0 +1,32 @@
+.swap-container-input{
+    display: flex;
+    padding-bottom: 30px;
+    font-size: 34px;
+    padding-top: 5px;
+}
+
+.asset-outer-input{
+    padding: 0px 20px;
+    padding-top: 5px;
+  }
+
+.asset-outer{
+    padding: 0px 20px;
+  }
+  
+  .asset-logo{
+    padding-left: 10px;
+  }
+
+  input.amount-input{
+    width: 80px;    
+    padding-bottom: 8px;
+    font-size: 34px;
+    padding-bottom: 5px
+}
+
+.amount-calculated{
+    width: 80px;   
+    padding-bottom: 3px;
+    font-size: 34px; 
+}

@@ -1,21 +1,87 @@
+import SwapSuggestionsContainer from '../SwapSuggestionsContainer/SwapSuggestionsContainer';
+import AssetToSwap from '../AssetToSwap/AssetToSwap';
 import './App.css';
-import {DropdownExampleSelection} from './Dropdown';
 
-const assetsOption = [
-  {
-    key: 'LUNA',
-    label: 'LUNA',
-    value: 'LUNA',
-    image: { src: 'https://assets.terra.money/icon/60/Luna.png' ,
-            width:'30px'}
-  },
-  {
-    key: 'APOLLO',
-    label: 'APOLLO',
-    value: 'APOLLO',
-    image: { src: 'https://d14knz87alb4l4.cloudfront.net/icons/APOLLO.png' ,
-            width:'30px'}
-  }
+
+const mostPopularsSwaps = [
+    [{
+        asset: 'APOLLO',
+        image: 'https://d14knz87alb4l4.cloudfront.net/icons/APOLLO.png' 
+    },{
+        asset: 'LUNA',
+        image: 'https://assets.terra.money/icon/60/Luna.png' 
+    }],
+    [{
+        asset: 'LUNA',
+        image: 'https://assets.terra.money/icon/60/Luna.png'  
+    },{
+        asset: 'UST',
+        image: 'https://assets.terra.money/icon/60/UST.png' 
+    }],
+    [{
+        asset: 'ANC',
+        image: 'https://whitelist.anchorprotocol.com/logo/ANC.png'  
+    },{
+        asset: 'UST',
+        image: 'https://assets.terra.money/icon/60/UST.png' 
+    }],
+]
+
+const recentSwaps = [
+    [{
+        asset: 'APOLLO',
+        image: 'https://d14knz87alb4l4.cloudfront.net/icons/APOLLO.png' 
+    },{
+        asset: 'LUNA',
+        image: 'https://assets.terra.money/icon/60/Luna.png' 
+    }],
+    [{
+        asset: 'LUNA',
+        image: 'https://assets.terra.money/icon/60/Luna.png'  
+    },{
+        asset: 'bLUNA',
+        image: 'https://whitelist.anchorprotocol.com/logo/bLUNA.png' 
+    }],
+    [{
+        asset: 'MINE',
+        image: 'https://assets.pylon.rocks/logo/MINE.png'  
+    },{
+        asset: 'UST',
+        image: 'https://assets.terra.money/icon/60/UST.png' 
+    }],
+]
+
+const suggestedSwaps= [
+    [{
+        asset: 'wAVAX',
+        image: 'https://app.astroport.fi/tokens/avax.png' 
+    },{
+        asset: 'LUNA',
+        image: 'https://assets.terra.money/icon/60/Luna.png' 
+    }],
+    [{
+        asset: 'LUNA',
+        image: 'https://assets.terra.money/icon/60/Luna.png' 
+    },{
+        asset: 'wAVAX',
+        image: 'https://app.astroport.fi/tokens/avax.png' 
+    }],
+    [{
+        asset: 'UST',
+        image: 'https://assets.terra.money/icon/60/UST.png' 
+    },{
+        asset: 'MINE',
+        image: 'https://assets.pylon.rocks/logo/MINE.png'  
+    }],
+]
+
+const suggestions = [
+    {title:'MOST POPULAR',
+     data: mostPopularsSwaps},
+    {title:'RECENT',
+    data: recentSwaps},
+    {title:'SUGGESTED',
+    data: suggestedSwaps}
 ]
 
 function App() {
@@ -24,107 +90,18 @@ function App() {
       <div className='App-header'>
         <div className='asset-selection-container'>
             <input  tabindex="1" placeholder="Swap Pair" type="text" />
-            <div className='swap-container'>
-                <div className='asset-outer'>
-                <p>UST</p>
-                <div className='asset-container'>
-                <input  tabindex="2" className='amount-input' placeholder="0" type="text" />            
-                <img className='asset-logo' src="https://assets.terra.money/icon/60/UST.png" width="30" alt="Italian Trulli"></img>
+            <div className='swap-container-input'>
+                <AssetToSwap asset="UST" logo="https://assets.terra.money/icon/60/UST.png"
+                            owned={true}></AssetToSwap>
+                <div className='arrow-container'>
+                    <div>&rarr;</div>
                 </div>
-            </div>
-            <div className='arrow-container'>
-                <div>&rarr;</div>
-            </div>
-            <div className='asset-outer'>
-                <p>LUNA</p>
-                <div className='asset-container'>
-                <div className='amount-calculated'>1.20</div>
-                <img className='asset-logo' src="https://assets.terra.money/icon/60/Luna.png" width="30" alt="Italian Trulli"></img>
-                </div>
-            </div>
+                <AssetToSwap asset="LUNA" logo="https://assets.terra.money/icon/60/Luna.png"
+                            owned={false} amount={1.20}></AssetToSwap>
             </div>
             <button tabindex="3" className='swap-button' type="button">SWAP</button>
         </div>
-        <div class="vl"></div>
-        <div className='suggestions-container'>
-          <div className='suggestion-category'>
-            <p className='suggestion-category-name'>MOST POPULAR</p>
-            <div tabindex="0" className='suggest-container'>
-                <p className='suggest-asset'>APOLLO</p>
-                <img className='suggest-logo' src="https://d14knz87alb4l4.cloudfront.net/icons/APOLLO.png" width="30" alt="Italian Trulli"></img>
-                <div className='suggest-arrow'>&rarr;</div>
-                <p className='suggest-asset'>UST</p>
-                <img className='suggest-logo' src="https://assets.terra.money/icon/60/UST.png" width="30" alt="Italian Trulli"></img>
-              </div>
-              <div tabindex="0" className='suggest-container'>
-                <p className='suggest-asset'>APOLLO</p>
-                <img className='suggest-logo' src="https://d14knz87alb4l4.cloudfront.net/icons/APOLLO.png" width="30" alt="Italian Trulli"></img>
-                <div className='suggest-arrow'>&rarr;</div>
-                <p className='suggest-asset'>UST</p>
-                <img className='suggest-logo' src="https://assets.terra.money/icon/60/UST.png" width="30" alt="Italian Trulli"></img>
-              </div>
-              <div tabindex="0"  className='suggest-container'>
-                <p className='suggest-asset'>APOLLO</p>
-                <img className='suggest-logo' src="https://d14knz87alb4l4.cloudfront.net/icons/APOLLO.png" width="30" alt="Italian Trulli"></img>
-                <div className='suggest-arrow'>&rarr;</div>
-                <p className='suggest-asset'>LUNA</p>
-                <img className='suggest-logo' src="https://assets.terra.money/icon/60/Luna.png" width="30" alt="Italian Trulli"></img>
-            </div>
-          </div>
-          <div class="vl"></div>
-          <div className='suggestion-category'>
-            <p className='suggestion-category-name'>RECENT</p>
-            <div className='suggestion'>
-                <div  tabindex="0" className='suggest-container'>
-                    <p className='suggest-asset'>LUNA</p>
-                    <img className='suggest-logo' src="https://assets.terra.money/icon/60/Luna.png" width="30" alt="Italian Trulli"></img>
-                    <div className='suggest-arrow'>&rarr;</div>
-                    <p className='suggest-asset'>UST</p>
-                    <img className='suggest-logo' src="https://assets.terra.money/icon/60/UST.png" width="30" alt="Italian Trulli"></img>
-                </div>
-                <div  tabindex="0" className='suggest-container'>
-                    <p className='suggest-asset'>APOLLO</p>
-                    <img className='suggest-logo' src="https://d14knz87alb4l4.cloudfront.net/icons/APOLLO.png" width="30" alt="Italian Trulli"></img>
-                    <div className='suggest-arrow'>&rarr;</div>
-                    <p className='suggest-asset'>UST</p>
-                    <img className='suggest-logo' src="https://assets.terra.money/icon/60/UST.png" width="30" alt="Italian Trulli"></img>
-                </div>
-                <div tabindex="0"  className='suggest-container'>
-                    <p className='suggest-asset'>APOLLO</p>
-                    <img className='suggest-logo' src="https://d14knz87alb4l4.cloudfront.net/icons/APOLLO.png" width="30" alt="Italian Trulli"></img>
-                    <div className='suggest-arrow'>&rarr;</div>
-                    <p className='suggest-asset'>UST</p>
-                    <img className='suggest-logo' src="https://assets.terra.money/icon/60/UST.png" width="30" alt="Italian Trulli"></img>
-                </div>
-            </div>
-          </div>
-          <div className='suggestion-category'>
-            <p className='suggestion-category-name'>SUGGESTED</p>
-            <div className='suggestion'>
-                <div  tabindex="0"  className='suggest-container'>
-                    <p className='suggest-asset'>APOLLO</p>
-                    <img className='suggest-logo' src="https://d14knz87alb4l4.cloudfront.net/icons/APOLLO.png" width="30" alt="Italian Trulli"></img>
-                    <div className='suggest-arrow'>&rarr;</div>
-                    <p className='suggest-asset'>UST</p>
-                    <img className='suggest-logo' src="https://assets.terra.money/icon/60/UST.png" width="30" alt="Italian Trulli"></img>
-                </div>
-                <div  tabindex="0" className='suggest-container'>
-                    <p className='suggest-asset'>APOLLO</p>
-                    <img className='suggest-logo' src="https://d14knz87alb4l4.cloudfront.net/icons/APOLLO.png" width="30" alt="Italian Trulli"></img>
-                    <div className='suggest-arrow'>&rarr;</div>
-                    <p className='suggest-asset'>LUNA</p>
-                    <img className='suggest-logo' src="https://assets.terra.money/icon/60/Luna.png" width="30" alt="Italian Trulli"></img>
-                </div>
-                <div  tabindex="0" className='suggest-container'>
-                    <p className='suggest-asset'>LUNA</p>
-                    <img className='suggest-logo' src="https://assets.terra.money/icon/60/Luna.png" width="30" alt="Italian Trulli"></img>
-                    <div className='suggest-arrow'>&rarr;</div>
-                    <p className='suggest-asset'>UST</p>
-                    <img className='suggest-logo' src="https://assets.terra.money/icon/60/UST.png" width="30" alt="Italian Trulli"></img>
-                </div>
-            </div>
-          </div>
-        </div>
+        <SwapSuggestionsContainer suggestions={suggestions}/>
       </div>
     </div>
   );
