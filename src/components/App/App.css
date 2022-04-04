@@ -1,0 +1,53 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+body {
+  background-color: #FDF6EC;
+}
+
+
+.asset-container{
+  display: flex;
+  align-items: center;
+}
+
+.asset-outer{
+  padding: 0px 20px;
+}
+
+.asset-logo{
+  padding-left: 10px;
+}
+
+.arrow-container{
+  display: flex;
+  align-items: end;
+}
+
+.swap-container {
+  display: flex;
+}
+
+.suggestions-container{
+  justify-content: space-evenly;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
