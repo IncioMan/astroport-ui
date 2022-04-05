@@ -1,5 +1,7 @@
 .suggestions-container{
-    justify-content: space-evenly;
+    justify-content: flex-start;
     display: flex;
     align-items: center;
+    max-width: 75%;
+    overflow-y: auto;
   }

@@ -103,7 +103,7 @@ function App() {
     <div className='App'>
       <div className='App-header'>
         <div className='asset-selection-container'>
-            <input  tabindex="1" placeholder="Swap Pair" type="text" />
+            <input  tabindex="1" placeholder="Swap Pair" type="text" autoFocus/>
             <div className='swap-container-input'>
                 <AssetToSwap asset={swapPair[0].asset} logo={logos[swapPair[0].asset]}
                             owned={true} onChange={(e)=>setAmountToSwap(e.target.value)}></AssetToSwap>
