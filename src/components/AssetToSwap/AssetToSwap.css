@@ -3,16 +3,15 @@
     padding-bottom: 30px;
     font-size: 34px;
     padding-top: 5px;
-    margin-right: 40px;
+    justify-content: space-evenly;
 }
 
 .asset-outer-input{
-    padding: 0px 20px;
     padding-top: 5px;
   }
 
 .asset-outer{
-   padding-left: 20px;
+    min-width: 120px;
   }
   
   .asset-logo{
