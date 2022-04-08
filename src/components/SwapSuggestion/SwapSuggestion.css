@@ -25,6 +25,7 @@
     width: 25px;
     height: 25px;
     padding-right: 10px;
+    padding-left: 10px;
     padding-top: 4px;
 }
 
@@ -43,7 +44,7 @@
     cursor: pointer;
     opacity: 0.7;
     font-size: 20px;
-    width: 300px;
+    width: 260px;
     justify-content: center;
 }
 
