@@ -8,6 +8,7 @@
 
 .suggest-container:focus {
     opacity: 1;
+    outline: none;
 }
 
 .suggest-asset {
