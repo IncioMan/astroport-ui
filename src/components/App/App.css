@@ -33,7 +33,7 @@ body {
 .arrow-container{
   display: flex;
   align-items: end;
-  padding-bottom: 3px;
+  padding: 3px 20px;
 }
 
 .swap-container {

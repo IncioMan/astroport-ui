@@ -1,8 +1,8 @@
 import SwapSuggestionsContainer from '../SwapSuggestionsContainer/SwapSuggestionsContainer';
-import AssetToSwap from '../AssetToSwap/AssetToSwap';
-import React, { useState } from 'react';
+import SwapContainer from '../SwapContainer/SwapContainer';
+import SwapContext from '../SwapContainer/SwapContext';
 import './App.css';
-
+import React, { useReducer } from 'react';
 
 const mostPopularsSwaps = [
     [{
@@ -85,38 +85,38 @@ const suggestions = [
     data: suggestedSwaps}
 ]
 
-const logos = {
-  'UST':'https://assets.terra.money/icon/60/UST.png',
-  'LUNA':'https://assets.terra.money/icon/60/Luna.png',
-  'wAVAX':'https://app.astroport.fi/tokens/avax.png',
-  'MINE':'https://assets.pylon.rocks/logo/MINE.png',
-  'bLUNA':'https://whitelist.anchorprotocol.com/logo/bLUNA.png',
-  'APOLLO':'https://d14knz87alb4l4.cloudfront.net/icons/APOLLO.png', 
-  'ANC': 'https://whitelist.anchorprotocol.com/logo/ANC.png' 
+const swapValueInit = {
+    assetFrom: {asset:'UST',amount:0},
+    assetTo: {asset:'LUNA'}
+}
+
+
+function swapValueReducer(state, value) {
+    var assetFrom =  value[0]
+    var assetTo = value[1]
+    var amount =  value[2]
+    return {
+        assetFrom: {asset: (assetFrom ? assetFrom : state.assetFrom.asset),
+                    amount: (amount? amount : state.assetFrom.amount)},
+        assetTo: {asset: (assetTo ? assetTo : state.assetTo.asset)}
+    }
 }
 
 
 function App() {
-  const [amountToSwap, setAmountToSwap] = useState(0);
-  const [swapPair, setSwapPair] = useState([{asset:'UST',amount:amountToSwap},{asset:'LUNA'}]);
+  const [swapValue, setSwapValue] = useReducer(swapValueReducer, swapValueInit);
   return (
     <div className='App'>
-      <div className='App-header'>
-        <div className='asset-selection-container'>
-            <input  tabindex="1" placeholder="Swap Pair" type="text" autoFocus/>
-            <div className='swap-container-input'>
-                <AssetToSwap asset={swapPair[0].asset} logo={logos[swapPair[0].asset]}
-                            owned={true} onChange={(e)=>setAmountToSwap(e.target.value)}></AssetToSwap>
-                <div className='arrow-container'>
-                    <div className='arrow-button' onClick={()=>setSwapPair([swapPair[1],swapPair[0]])}>&rarr;</div>
-                </div>
-                <AssetToSwap asset={swapPair[1].asset} logo={logos[swapPair[1].asset]}
-                            owned={false} amount={Math.round(amountToSwap*0.13*100)/100}></AssetToSwap>
+      <SwapContext.Provider value={{swapValue, setSwapValue}}>
+        <div className='App-header'>
+            <div className='asset-selection-container'>
+                <input  tabindex="1" placeholder="Swap Pair" type="text" autoFocus/>
+                <SwapContainer/>
+                <button tabindex="3" className='swap-button' type="button">SWAP</button>
             </div>
-            <button tabindex="3" className='swap-button' type="button">SWAP</button>
+            <SwapSuggestionsContainer suggestions={suggestions}/>
         </div>
-        <SwapSuggestionsContainer suggestions={suggestions} setSwapPair={setSwapPair}/>
-      </div>
+      </SwapContext.Provider>
     </div>
   );
 }

@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import SwapSuggestion from '../SwapSuggestion/SwapSuggestion'
 import './SwapSuggestionList.css'
+import SwapContext from '../SwapContainer/SwapContext';
 
 export default function SwapSuggestionList(props) {
-    const {title, pairs, setSwapPair} = props
+    const {title, pairs} = props
+    const {setSwapValue} = useContext(SwapContext);
     return (
         <div>
             <p className='suggestion-category-name'>{title}</p>
@@ -15,12 +17,10 @@ export default function SwapSuggestionList(props) {
                     logo1={pair[0].image}
                     asset2={pair[1].asset}
                     logo2={pair[1].image}
-                    onClick={() => setSwapPair([{asset: pair[0].asset,
-                        amount:0},{asset:pair[1].asset}])}
+                    onClick={() => setSwapValue([pair[0].asset,pair[1].asset])}
                     onKeyUp = {(e) =>{
                         if (e.key === 'Enter') {
-                            setSwapPair([{asset:pair[0].asset,
-                                amount:0},{asset:pair[1].asset}])
+                            setSwapValue([pair[0].asset,pair[1].asset])
                         }
                     }}
                     ></SwapSuggestion>

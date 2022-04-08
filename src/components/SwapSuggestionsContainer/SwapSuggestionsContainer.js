@@ -9,8 +9,8 @@ export default function SwapSuggestionsContainer(props) {
             props.suggestions.map((sugg) => (
                 <SwapSuggestionList 
                 title={sugg.title} 
-                pairs={sugg.data} 
-                setSwapPair={props.setSwapPair}/>
+                pairs={sugg.data}
+                />
             ))
         }
         </div>
