@@ -1,5 +1,6 @@
 import SwapSuggestionsContainer from '../SwapSuggestionsContainer/SwapSuggestionsContainer';
 import SwapContainer from '../SwapContainer/SwapContainer';
+import PairDropdown from '../PairDropdown/PairDropdown';
 import SwapContext from '../SwapContainer/SwapContext';
 import './App.css';
 import React, { useReducer } from 'react';
@@ -110,7 +111,7 @@ function App() {
       <SwapContext.Provider value={{swapValue, setSwapValue}}>
         <div className='App-header'>
             <div className='asset-selection-container'>
-                <input  tabindex="1" placeholder="Swap Pair" type="text" autoFocus/>
+                <PairDropdown/>
                 <SwapContainer/>
                 <button tabindex="3" className='swap-button' type="button">SWAP</button>
             </div>
