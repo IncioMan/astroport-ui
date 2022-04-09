@@ -10,7 +10,7 @@ export default function AssetToSwap(props) {
                 <div className='asset-container'>
                     {(owned &&
                     <>
-                        <input onChange={onChange} tabindex="2" className='amount-input' placeholder="0" type="number" />
+                        <input onChange={onChange} tabindex="3" className='amount-input' placeholder="0" type="number" />
                         <img className='asset-logo-from' src={logo} width="40" alt="Italian Trulli"></img>
                     </>)}    
                     {(!owned && 

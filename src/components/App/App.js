@@ -113,7 +113,7 @@ function App() {
             <div className='asset-selection-container'>
                 <PairDropdown/>
                 <SwapContainer/>
-                <button tabindex="3" className='swap-button' type="button">SWAP</button>
+                <button tabindex="4" className='swap-button' type="button">SWAP</button>
             </div>
             <SwapSuggestionsContainer suggestions={suggestions}/>
         </div>

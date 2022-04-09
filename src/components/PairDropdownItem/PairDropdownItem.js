@@ -4,7 +4,7 @@ import './PairDropdownItem.css'
 export default function PairDropdownItem(props) {
     const { asset1, logo1, asset2, logo2, onClick, onKeyUp} = props;
     return (
-        <div onClick={onClick} onKeyUp={onKeyUp} tabindex="0" className='dd-suggest-container'>
+        <div onClick={onClick} onKeyUp={onKeyUp} tabindex="2" className='dd-suggest-container'>
             <div className='dd-item-asset-container'>
                 <p className='dd-suggest-asset'>{asset1}</p>
                 <img className='dd-suggest-logo' src={logo1} width="30" alt="Italian Trulli"></img>
