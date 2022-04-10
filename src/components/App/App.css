@@ -80,6 +80,8 @@ input:focus::placeholder {
 .asset-selection-container{
     padding-top: 35px;
     padding-bottom: 70px;
+    position: relative;
+    align-items: center;
 }
 
 

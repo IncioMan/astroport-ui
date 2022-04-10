@@ -1,0 +1,31 @@
+.dropdown-list-container{
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+  margin-top: 2px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.dd-list-item{
+    padding-top: 3px;
+    width: 100%;
+    background: #000e37;
+    color: white;
+    border: none;
+    height: 42px;
+}
+
+.dd-list-item:focus-visible{
+  outline: none;
+}
+
+.dd-suggest-container{
+  margin: 0px 13px;
+  padding-top: 3px;
+}
+
+.dd-suggest-container:focus-visible{
+  outline: none;
+  border-style: solid;
+}

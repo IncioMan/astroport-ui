@@ -15,8 +15,12 @@
     min-width: 120px;
   }
   
-  .asset-logo{
+  .asset-logo-from{
     padding-left: 10px;
+  }
+
+  .asset-logo-to{
+    padding-right: 10px;
   }
 
   input.amount-input{
