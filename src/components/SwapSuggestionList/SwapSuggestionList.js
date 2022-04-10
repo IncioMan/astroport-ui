@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import SwapSuggestion from '../SwapSuggestion/SwapSuggestion'
+import { TailSpin } from  'react-loader-spinner'
 import './SwapSuggestionList.css'
 import SwapContext from '../SwapContainer/SwapContext';
 
@@ -9,8 +10,12 @@ export default function SwapSuggestionList(props) {
     return (
         <div>
             <p className='suggestion-category-name'>{title}</p>
+            {(!loaded) && <div className='suggestion-loading-container'>
+                <TailSpin className="loading" height="40" width="40" color='#ffffff'ariaLabel='loading'/>
+            </div>
+            }
             {
-                pairs.map((pair) => (
+                loaded && pairs.map((pair) => (
                 <SwapSuggestion 
                     key={title+pair[0].asset+pair[1].asset}
                     asset1={pair[0].asset}

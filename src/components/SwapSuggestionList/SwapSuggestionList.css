@@ -2,3 +2,14 @@
     opacity: 0.8;
     font-size: 15px
 }
+
+.suggestion-loading-container{
+    display: grid;
+    align-items: center;
+    min-width: 250px;
+    min-height: 100px;
+}
+
+[data-testid=tail-spin-loading]{
+    margin: auto;
+}
