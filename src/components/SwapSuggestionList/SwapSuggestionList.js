@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import SwapSuggestion from '../SwapSuggestion/SwapSuggestion'
 import { TailSpin } from  'react-loader-spinner'
 import './SwapSuggestionList.css'
@@ -7,6 +7,12 @@ import SwapContext from '../SwapContainer/SwapContext';
 export default function SwapSuggestionList(props) {
     const {title, pairs} = props
     const {setSwapValue} = useContext(SwapContext);
+    const [loaded, setLoaded] = useState(false);
+
+    useEffect(()=>{
+        setTimeout(()=>setLoaded(true), 5000)
+    })
+
     return (
         <div>
             <p className='suggestion-category-name'>{title}</p>
@@ -22,10 +28,20 @@ export default function SwapSuggestionList(props) {
                     logo1={pair[0].image}
                     asset2={pair[1].asset}
                     logo2={pair[1].image}
-                    onClick={() => setSwapValue([pair[0].asset,pair[1].asset])}
+                    onClick={() => {
+                        setSwapValue({
+                            assetFrom: pair[0].asset,
+                            assetTo: pair[1].asset,
+                            step: 'amount'
+                        })
+                    }}
                     onKeyUp = {(e) =>{
                         if (e.key === 'Enter') {
-                            setSwapValue([pair[0].asset,pair[1].asset])
+                            setSwapValue({
+                                assetFrom: pair[0].asset,
+                                assetTo: pair[1].asset,
+                                step: 'amount'
+                            })
                         }
                     }}
                     ></SwapSuggestion>

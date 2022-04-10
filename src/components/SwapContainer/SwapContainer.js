@@ -21,12 +21,20 @@ export default function SwapContainer() {
         <div className='arrow-container'>
             <div className='arrow-button' tabIndex={5} 
                 onClick={()=>{
-                setSwapValue([swapValue.assetTo.asset,swapValue.assetFrom.asset, null])
+                    setSwapValue({
+                        assetFrom: swapValue.assetTo.asset,
+                        assetTo:swapValue.assetFrom.asset,
+                        step: 'amount'
+                    })
                 }}
                 onKeyUp = {(e) =>{
                     if (e.key === 'Enter') {
-                        setSwapValue([swapValue.assetTo.asset,swapValue.assetFrom.asset, null])
-                }
+                        setSwapValue({
+                            assetFrom: swapValue.assetTo.asset,
+                            assetTo:swapValue.assetFrom.asset,
+                            step: 'amount'
+                        })
+                    }
                 }}>&rarr;</div>
         </div>
         <AssetToSwap asset={swapValue.assetTo.asset} logo={logos[swapValue.assetTo.asset]}

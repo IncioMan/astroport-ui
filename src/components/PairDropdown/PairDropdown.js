@@ -149,12 +149,20 @@ export default class PairDropdown extends Component {
                                     logo2={pair.pair.to.image}
                                     focused={pair.focused}
                                     onClick={() => {
-                                        setSwapValue([pair.pair.from.asset,pair.pair.to.asset])
+                                        setSwapValue({
+                                            assetFrom: pair.pair.from.asset,
+                                            assetTo: pair.pair.to.asset,
+                                            step: 'amount'
+                                        })
                                         this.closeWindow();
                                     }}
                                     onKeyUp = {(e) =>{
                                         if (e.key === 'Enter') {
-                                            setSwapValue([pair.pair.from.asset,pair.pair.to.asset])
+                                            setSwapValue({
+                                                assetFrom: pair.pair.from.asset,
+                                                assetTo: pair.pair.to.asset,
+                                                step: 'amount'
+                                            })
                                             this.closeWindow();
                                         }
                                         if (e.key === 'Escape') {

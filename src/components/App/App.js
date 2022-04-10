@@ -3,7 +3,7 @@ import SwapContainer from '../SwapContainer/SwapContainer';
 import PairDropdown from '../PairDropdown/PairDropdown';
 import SwapContext from '../SwapContainer/SwapContext';
 import './App.css';
-import React, { useReducer } from 'react';
+import React, { useEffect, useReducer, useRef } from 'react';
 
 const mostPopularsSwaps = [
     [{
@@ -88,24 +88,36 @@ const suggestions = [
 
 const swapValueInit = {
     assetFrom: {asset:'UST',amount:0},
-    assetTo: {asset:'LUNA'}
+    assetTo: {asset:'LUNA'},
+    step : 'pair'
 }
 
 
 function swapValueReducer(state, value) {
-    var assetFrom =  value[0]
-    var assetTo = value[1]
-    var amount =  value[2]
+    var assetFrom =  value.assetFrom
+    var assetTo = value.assetTo
+    var amount =  value.amount
+    var step =  value.step
     return {
         assetFrom: {asset: (assetFrom ? assetFrom : state.assetFrom.asset),
                     amount: (amount? amount : state.assetFrom.amount)},
-        assetTo: {asset: (assetTo ? assetTo : state.assetTo.asset)}
+        assetTo: {asset: (assetTo ? assetTo : state.assetTo.asset)},
+        step: (step ? step : state.step)
     }
 }
 
 
+
 function App() {
   const [swapValue, setSwapValue] = useReducer(swapValueReducer, swapValueInit);
+  const swapRef = useRef();
+
+  useEffect(()=>{
+    if(swapValue.step === 'swap'){
+        swapRef.current.focus()
+    }
+  },[swapValue])
+
   return (
     <div className='App'>
       <SwapContext.Provider value={{swapValue, setSwapValue}}>
@@ -113,7 +125,7 @@ function App() {
             <div className='asset-selection-container'>
                 <PairDropdown/>
                 <SwapContainer/>
-                <button tabindex="4" className='swap-button' type="button">SWAP</button>
+                <button ref={swapRef} tabindex="4" className='swap-button' type="button">SWAP</button>
             </div>
             <SwapSuggestionsContainer suggestions={suggestions}/>
         </div>
