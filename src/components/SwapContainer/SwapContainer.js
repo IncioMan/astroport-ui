@@ -19,8 +19,14 @@ export default function SwapContainer() {
         <AssetToSwap asset={swapValue.assetFrom.asset} logo={logos[swapValue.assetFrom.asset]}
                     owned={true} amount={swapValue.assetFrom.amount} onChange={(e)=>setSwapValue([null, null, e.target.value])}></AssetToSwap>
         <div className='arrow-container'>
-            <div className='arrow-button' tabIndex={5} onClick={()=>{
+            <div className='arrow-button' tabIndex={5} 
+                onClick={()=>{
                 setSwapValue([swapValue.assetTo.asset,swapValue.assetFrom.asset, null])
+                }}
+                onKeyUp = {(e) =>{
+                    if (e.key === 'Enter') {
+                        setSwapValue([swapValue.assetTo.asset,swapValue.assetFrom.asset, null])
+                }
                 }}>&rarr;</div>
         </div>
         <AssetToSwap asset={swapValue.assetTo.asset} logo={logos[swapValue.assetTo.asset]}

@@ -1,10 +1,17 @@
-import React from 'react';
+import React, {useRef, useEffect} from 'react';
 import './PairDropdownItem.css'
 
 export default function PairDropdownItem(props) {
-    const { asset1, logo1, asset2, logo2, onClick, onKeyUp} = props;
+    const {asset1, logo1, asset2, logo2, onClick, onKeyUp, onKeyDown, focused} = props;
+    const itemRef = useRef(null);
+
+    useEffect(() => {
+        console.log(focused, 'here')
+        if(focused){itemRef.current.focus()};
+      }, [focused]);
+
     return (
-        <div onClick={onClick} onKeyUp={onKeyUp} tabindex="2" className='dd-suggest-container'>
+        <div onClick={onClick} on onKeyDown={onKeyDown} onKeyUp={onKeyUp} tabindex="2" ref={itemRef} className='dd-suggest-container'>
             <div className='dd-item-asset-container'>
                 <p className='dd-suggest-asset'>{asset1}</p>
                 <img className='dd-suggest-logo' src={logo1} width="30" alt="Italian Trulli"></img>
