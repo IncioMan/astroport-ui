@@ -1,16 +1,26 @@
-import React from 'react';
+import React, { useEffect , useRef, useContext} from 'react';
 import './AssetToSwap.css'
+import SwapContext from '../SwapContainer/SwapContext';
 
 export default function AssetToSwap(props) {
     const { asset, logo, owned, amount,onChange } = props;
     const className = owned ? 'asset-outer-input':'asset-outer'
+    const inputRef = useRef()
+    const {swapValue} = useContext(SwapContext);
+
+    useEffect(()=>{
+        if(inputRef&&inputRef.current){
+            inputRef.current.focus()
+        }
+    }, [swapValue])
+
     return (
             <div className={className}>
                 <p>{asset}</p>
                 <div className='asset-container'>
                     {(owned &&
                     <>
-                        <input onChange={onChange} tabindex="3" className='amount-input' placeholder="0" type="number" />
+                        <input onChange={onChange} tabindex="3" ref={inputRef} className='amount-input' placeholder="0" type="number" />
                         <img className='asset-logo-from' src={logo} width="40" alt="Italian Trulli"></img>
                     </>)}    
                     {(!owned && 

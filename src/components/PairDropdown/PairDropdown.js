@@ -69,13 +69,11 @@ export default class PairDropdown extends Component {
 
     arrowHandler = (index, change) => {
         this.setState(prevState => {
-            console.log('old',prevState.focusedOption)
             var newSuggestionsShown = [...prevState.suggestionsShown]
             var newFocusedOption = index
             if(index+change < newSuggestionsShown.length){
                 newFocusedOption = index + change
             }
-            console.log('new',newFocusedOption)
             if(newFocusedOption>=0){
                 newSuggestionsShown[newFocusedOption].focused = true;
             }
@@ -116,6 +114,11 @@ export default class PairDropdown extends Component {
        }})
     }
     
+    escapeWindow = () => {
+        this.closeWindow()
+        this.inputRef.current.focus()
+    }
+
     render() {
         const { isListOpen, suggestionsShown, inputText} = this.state;
         return (
@@ -153,6 +156,9 @@ export default class PairDropdown extends Component {
                                         if (e.key === 'Enter') {
                                             setSwapValue([pair.pair.from.asset,pair.pair.to.asset])
                                             this.closeWindow();
+                                        }
+                                        if (e.key === 'Escape') {
+                                            this.escapeWindow();
                                         }
                                     }}
                                     onKeyDown = {(e)=>{

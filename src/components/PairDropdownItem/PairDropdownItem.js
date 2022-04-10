@@ -6,7 +6,6 @@ export default function PairDropdownItem(props) {
     const itemRef = useRef(null);
 
     useEffect(() => {
-        console.log(focused, 'here')
         if(focused){itemRef.current.focus()};
       }, [focused]);
 
