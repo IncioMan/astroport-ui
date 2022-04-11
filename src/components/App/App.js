@@ -6,76 +6,17 @@ import './App.css';
 import React, { useEffect, useReducer, useRef } from 'react';
 
 const mostPopularsSwaps = [
-    [{
-        asset: 'APOLLO',
-        image: 'https://d14knz87alb4l4.cloudfront.net/icons/APOLLO.png' 
-    },{
-        asset: 'LUNA',
-        image: 'https://assets.terra.money/icon/60/Luna.png' 
-    }],
-    [{
-        asset: 'LUNA',
-        image: 'https://assets.terra.money/icon/60/Luna.png'  
-    },{
-        asset: 'UST',
-        image: 'https://assets.terra.money/icon/60/UST.png' 
-    }],
-    [{
-        asset: 'ANC',
-        image: 'https://whitelist.anchorprotocol.com/logo/ANC.png'  
-    },{
-        asset: 'UST',
-        image: 'https://assets.terra.money/icon/60/UST.png' 
-    }],
-]
-
+    'terra1m6ywlgn6wrjuagcmmezzz2a029gtldhey5k552',
+    'terra1j66jatn3k50hjtg2xemnjm8s7y8dws9xqa5y8w',
+    'terra1qr2k6yjjd5p2kaewqvg93ag74k6gyjr7re37fs']
 const recentSwaps = [
-    [{
-        asset: 'APOLLO',
-        image: 'https://d14knz87alb4l4.cloudfront.net/icons/APOLLO.png' 
-    },{
-        asset: 'LUNA',
-        image: 'https://assets.terra.money/icon/60/Luna.png' 
-    }],
-    [{
-        asset: 'LUNA',
-        image: 'https://assets.terra.money/icon/60/Luna.png'  
-    },{
-        asset: 'bLUNA',
-        image: 'https://whitelist.anchorprotocol.com/logo/bLUNA.png' 
-    }],
-    [{
-        asset: 'MINE',
-        image: 'https://assets.pylon.rocks/logo/MINE.png'  
-    },{
-        asset: 'UST',
-        image: 'https://assets.terra.money/icon/60/UST.png' 
-    }],
-]
-
+    'terra143xxfw5xf62d5m32k3t4eu9s82ccw80lcprzl9',
+    'terra1mxyp5z27xxgmv70xpqjk7jvfq54as9dfzug74m',
+    'terra1m95udvvdame93kl6j2mk8d03kc982wqgr75jsr']
 const suggestedSwaps= [
-    [{
-        asset: 'wAVAX',
-        image: 'https://app.astroport.fi/tokens/avax.png' 
-    },{
-        asset: 'LUNA',
-        image: 'https://assets.terra.money/icon/60/Luna.png' 
-    }],
-    [{
-        asset: 'LUNA',
-        image: 'https://assets.terra.money/icon/60/Luna.png' 
-    },{
-        asset: 'wAVAX',
-        image: 'https://app.astroport.fi/tokens/avax.png' 
-    }],
-    [{
-        asset: 'UST',
-        image: 'https://assets.terra.money/icon/60/UST.png' 
-    },{
-        asset: 'MINE',
-        image: 'https://assets.pylon.rocks/logo/MINE.png'  
-    }],
-]
+    'terra1v5ct2tuhfqd0tf8z0wwengh4fg77kaczgf6gtx',
+    'terra134m8n2epp0n40qr08qsvvrzycn2zq4zcpmue48',
+    'terra15s2wgdeqhuc4gfg7sfjyaep5cch38mwtzmwqrx']
 
 const suggestions = [
     {title:'MOST POPULAR',

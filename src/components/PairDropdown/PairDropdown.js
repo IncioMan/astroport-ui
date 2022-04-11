@@ -2,50 +2,12 @@ import React, { Component } from 'react';
 import PairDropdownItem from '../PairDropdownItem/PairDropdownItem'
 import './PairDropdown.css'
 import SwapContext from '../SwapContainer/SwapContext';
+import pools from '../../data/astroport.dex.js'
+import tokens from '../../data/tokens.js'
 export default class PairDropdown extends Component {
     constructor(props) {
         super(props)
-        this.availablePairs = [
-            {pair: {
-                from:{
-                    asset: 'wAVAX',
-                    image: 'https://app.astroport.fi/tokens/avax.png' 
-                },
-                to:{
-                    asset: 'LUNA',
-                    image: 'https://assets.terra.money/icon/60/Luna.png' 
-                }
-            }, focused: false},
-            {pair: {
-                from:{
-                    asset: 'LUNA',
-                    image: 'https://assets.terra.money/icon/60/Luna.png' 
-                },
-                to:{
-                    asset: 'wAVAX',
-                    image: 'https://app.astroport.fi/tokens/avax.png' 
-                }
-            }, focused: false},
-            {pair: {
-                from:{
-                    asset: 'UST',
-                    image: 'https://assets.terra.money/icon/60/UST.png'
-                },
-                to:{
-                    asset: 'MINE',
-                    image: 'https://assets.pylon.rocks/logo/MINE.png' 
-                }
-            }, focused: false},
-            {pair: {
-                from:{
-                asset: 'ANC',
-                image: 'https://whitelist.anchorprotocol.com/logo/ANC.png' 
-                },
-                to:{
-                    asset: 'UST',
-                    image: 'https://assets.terra.money/icon/60/UST.png'
-                }
-            }, focused: false}]
+        this.availablePairs = Object.keys(pools.mainnet).map((l)=>({pool:l,focused:false}))
         this.state = {
           isListOpen: false,
           suggestionsShown: this.availablePairs,

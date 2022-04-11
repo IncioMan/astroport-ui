@@ -3,6 +3,8 @@ import SwapSuggestion from '../SwapSuggestion/SwapSuggestion'
 import { TailSpin } from  'react-loader-spinner'
 import './SwapSuggestionList.css'
 import SwapContext from '../SwapContainer/SwapContext';
+import pools, { mainnet } from '../../data/astroport.dex.js'
+import tokens from '../../data/tokens.js'
 
 export default function SwapSuggestionList(props) {
     const {title, pairs} = props
@@ -10,6 +12,7 @@ export default function SwapSuggestionList(props) {
     const [loaded, setLoaded] = useState(false);
 
     useEffect(()=>{
+        console.log()
         setTimeout(()=>setLoaded(true), 5000)
     })
 
@@ -21,13 +24,17 @@ export default function SwapSuggestionList(props) {
             </div>
             }
             {
-                loaded && pairs.map((pair) => (
-                <SwapSuggestion 
-                    key={title+pair[0].asset+pair[1].asset}
-                    asset1={pair[0].asset}
-                    logo1={pair[0].image}
-                    asset2={pair[1].asset}
-                    logo2={pair[1].image}
+                loaded && pairs.map((pair) => {
+                const pool = pools.mainnet[pair]
+                const assetFrom = tokens.mainnet[pool.assets[0]]
+                const assetTo = tokens.mainnet[pool.assets[1]]
+                console.log(pair, assetFrom, assetTo)
+                return <SwapSuggestion 
+                    key={pair}
+                    asset1={assetFrom.symbol}
+                    logo1={assetFrom.icon}
+                    asset2={assetTo.symbol}
+                    logo2={assetTo.icon}
                     onClick={() => {
                         setSwapValue({
                             assetFrom: pair[0].asset,
@@ -45,7 +52,7 @@ export default function SwapSuggestionList(props) {
                         }
                     }}
                     ></SwapSuggestion>
-                ))
+                })
             }
         </div>
     )
