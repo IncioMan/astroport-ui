@@ -3,6 +3,6 @@
     overflow: auto;
     display: flex;
     flex-flow: row wrap;
-    height: 190px;
+    height: 200px;
     justify-content: center;
   }
