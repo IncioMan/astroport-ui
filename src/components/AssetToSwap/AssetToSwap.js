@@ -24,12 +24,22 @@ export default function AssetToSwap(props) {
         })
     }
 
+    const amountHandler = () => {
+        console.log('next swap') 
+        setSwapValue({
+            amount: 900
+        })
+        if(inputRef&&inputRef.current){
+            inputRef.current.value = 900
+        }
+    }
+
     return (
             <div className={className}>
                 <div className='current-balance'>
                 {(owned && 
                     <>
-                        <div>0.09</div> 
+                        <div onClick={()=>amountHandler()}>900</div> 
                     </>
                 )}
                 </div>
@@ -37,7 +47,8 @@ export default function AssetToSwap(props) {
                 <div className='asset-container'>
                     {(owned &&
                     <>
-                        <input  onChange={onChange} tabindex="3" 
+                        <input  onChange={onChange}
+                                tabindex="3" 
                                 ref={inputRef} className='amount-input' 
                                 placeholder="0" type="number"
                                 onKeyUp = {(e) =>{

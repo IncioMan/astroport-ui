@@ -1,5 +1,29 @@
 module.exports = {
   mainnet: {
+    terra188w26t95tf4dz77raftme8p75rggatxjxfeknw:{
+      protocol: "Kujira sKUJI Token",
+      name: "Kujira sKUJI Token",
+      symbol: "sKUJI",
+      token: "terra188w26t95tf4dz77raftme8p75rggatxjxfeknw",
+      icon:"https://app.astroport.fi/tokens/skuji.png",
+      decimals: 6
+    },
+    terra1hj8de24c3yqvcsv9r8chr03fzwsak3hgd8gv3m:{
+      protocol: "Wrapped AVAX",
+      name: "Wrapped AVAX",
+      symbol: "WAVAX",
+      token: "terra190tqwgqx7s8qrknz6kckct7v607cu068gfujpk",
+      icon: "https://app.astroport.fi/tokens/avax.png",
+      decimals: 6
+    },
+    terra190tqwgqx7s8qrknz6kckct7v607cu068gfujpk:{
+      protocol: "Wrapped SOL",
+      symbol: "wsSOL",
+      name: "wsSOL",
+      token: "terra190tqwgqx7s8qrknz6kckct7v607cu068gfujpk",
+      icon: "https://raw.githubusercontent.com/certusone/wormhole-token-list/main/assets/SOL_wh.png",
+      decimals: 6
+    },
     terra14v9wrjs55qsn9lkvylsqela3w2ytwxzkycqzcr:{
       protocol: "SAYVE",
       symbol: "SAYVE",

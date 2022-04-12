@@ -27,12 +27,14 @@ export default class PairDropdown extends Component {
     }
 
     processInput = (text) => {
+        const textCleaned = text.replace(' ','')
+                                .replace('->','')
         this.setState(prevState => ({
           isListOpen: text.length>0,
           suggestionsShown : this.availablePairs.filter(pair => {
-              var filteredStrings = {search: text.toUpperCase(), select: (pair.from.symbol + pair.to.symbol).toUpperCase()}
+              var filteredStrings = {search: textCleaned.toUpperCase(), select: (pair.from.symbol + pair.to.symbol).toUpperCase()}
               var intersection = (filteredStrings.select.match(new RegExp('[' + filteredStrings.search + ']', 'g')) || []).join('');
-              return intersection.length >= text.length
+              return intersection.length >= textCleaned.length
           }),
           inputText: text
        }))

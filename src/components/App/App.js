@@ -24,12 +24,13 @@ function swapValueReducer(state, value) {
     var assetTo = value.assetTo
     var amount =  value.amount
     var step =  value.step
-    return {
+    var newValue = {
         assetFrom: {asset: (assetFrom ? assetFrom : state.assetFrom.asset),
                     amount: (amount? amount : state.assetFrom.amount)},
         assetTo: {asset: (assetTo ? assetTo : state.assetTo.asset)},
         step: (step ? step : state.step)
     }
+    return newValue
 }
 
 
@@ -56,6 +57,7 @@ function App() {
                     <button ref={swapRef} tabindex="4" className='swap-button' type="button">SWAP</button>
                 </div>
             </div>
+            <SwapSuggestionsContainer suggestions={suggestions}/>
         </div>
       </SwapContext.Provider>
     </div>
