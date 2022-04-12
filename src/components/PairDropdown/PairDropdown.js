@@ -2,50 +2,21 @@ import React, { Component } from 'react';
 import PairDropdownItem from '../PairDropdownItem/PairDropdownItem'
 import './PairDropdown.css'
 import SwapContext from '../SwapContainer/SwapContext';
+import pools from '../../data/astroport.dex.js'
+import tokens from '../../data/tokens.js'
 export default class PairDropdown extends Component {
     constructor(props) {
         super(props)
-        this.availablePairs = [
-            {pair: {
-                from:{
-                    asset: 'wAVAX',
-                    image: 'https://app.astroport.fi/tokens/avax.png' 
-                },
-                to:{
-                    asset: 'LUNA',
-                    image: 'https://assets.terra.money/icon/60/Luna.png' 
-                }
-            }, focused: false},
-            {pair: {
-                from:{
-                    asset: 'LUNA',
-                    image: 'https://assets.terra.money/icon/60/Luna.png' 
-                },
-                to:{
-                    asset: 'wAVAX',
-                    image: 'https://app.astroport.fi/tokens/avax.png' 
-                }
-            }, focused: false},
-            {pair: {
-                from:{
-                    asset: 'UST',
-                    image: 'https://assets.terra.money/icon/60/UST.png'
-                },
-                to:{
-                    asset: 'MINE',
-                    image: 'https://assets.pylon.rocks/logo/MINE.png' 
-                }
-            }, focused: false},
-            {pair: {
-                from:{
-                asset: 'ANC',
-                image: 'https://whitelist.anchorprotocol.com/logo/ANC.png' 
-                },
-                to:{
-                    asset: 'UST',
-                    image: 'https://assets.terra.money/icon/60/UST.png'
-                }
-            }, focused: false}]
+        this.availablePairs = Object.keys(pools.mainnet).map((pool)=>({
+            pool: pool,
+            from: tokens.mainnet[pools.mainnet[pool].assets[0]],
+            to: tokens.mainnet[pools.mainnet[pool].assets[1]],
+            focused:false}))
+        this.availablePairs = this.availablePairs.concat(Object.keys(pools.mainnet).map((pool)=>({
+            pool: pool,
+            from: tokens.mainnet[pools.mainnet[pool].assets[1]],
+            to: tokens.mainnet[pools.mainnet[pool].assets[0]],
+            focused:false})))
         this.state = {
           isListOpen: false,
           suggestionsShown: this.availablePairs,
@@ -56,12 +27,14 @@ export default class PairDropdown extends Component {
     }
 
     processInput = (text) => {
+        const textCleaned = text.replace(' ','')
+                                .replace('->','')
         this.setState(prevState => ({
           isListOpen: text.length>0,
           suggestionsShown : this.availablePairs.filter(pair => {
-              var filteredStrings = {search: text.toUpperCase(), select: (pair.pair.from.asset + pair.pair.to.asset).toUpperCase()}
+              var filteredStrings = {search: textCleaned.toUpperCase(), select: (pair.from.symbol + pair.to.symbol).toUpperCase()}
               var intersection = (filteredStrings.select.match(new RegExp('[' + filteredStrings.search + ']', 'g')) || []).join('');
-              return intersection.length >= text.length
+              return intersection.length >= textCleaned.length
           }),
           inputText: text
        }))
@@ -143,15 +116,15 @@ export default class PairDropdown extends Component {
                         {isListOpen && suggestionsShown.map((pair, index) => (
                         <div className="dd-list-item">
                             <PairDropdownItem 
-                                    asset1={pair.pair.from.asset}
-                                    logo1={pair.pair.from.image}
-                                    asset2={pair.pair.to.asset}
-                                    logo2={pair.pair.to.image}
+                                    asset1={pair.from.symbol}
+                                    logo1={pair.from.icon}
+                                    asset2={pair.to.symbol}
+                                    logo2={pair.to.icon}
                                     focused={pair.focused}
                                     onClick={() => {
                                         setSwapValue({
-                                            assetFrom: pair.pair.from.asset,
-                                            assetTo: pair.pair.to.asset,
+                                            assetFrom: pair.from.token,
+                                            assetTo: pair.to.asset,
                                             step: 'amount'
                                         })
                                         this.closeWindow();
@@ -159,8 +132,8 @@ export default class PairDropdown extends Component {
                                     onKeyUp = {(e) =>{
                                         if (e.key === 'Enter') {
                                             setSwapValue({
-                                                assetFrom: pair.pair.from.asset,
-                                                assetTo: pair.pair.to.asset,
+                                                assetFrom: pair.from.token,
+                                                assetTo: pair.to.token,
                                                 step: 'amount'
                                             })
                                             this.closeWindow();

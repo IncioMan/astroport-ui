@@ -3,14 +3,30 @@ import SwapSuggestion from '../SwapSuggestion/SwapSuggestion'
 import { TailSpin } from  'react-loader-spinner'
 import './SwapSuggestionList.css'
 import SwapContext from '../SwapContainer/SwapContext';
+import pools from '../../data/astroport.dex.js'
+import tokens from '../../data/tokens.js'
+const axios = require('axios').default;
 
 export default function SwapSuggestionList(props) {
-    const {title, pairs} = props
+    const {title, url} = props
     const {setSwapValue} = useContext(SwapContext);
     const [loaded, setLoaded] = useState(false);
+    const [pairs, setPairs] = useState([]);
 
     useEffect(()=>{
-        setTimeout(()=>setLoaded(true), 5000)
+        axios.get(url)
+        .then(function (response) {
+            // handle success
+            setPairs(response.data.map((p)=>p["POOL_ADDRESS"]).filter(p=>Object.keys(pools.mainnet).includes(p)).slice(0,5))
+            setLoaded(true)
+        })
+        .catch(function (error) {
+            // handle error
+            console.log(error);
+        })
+        .then(function () {
+            // always executed
+        });
     })
 
     return (
@@ -21,31 +37,36 @@ export default function SwapSuggestionList(props) {
             </div>
             }
             {
-                loaded && pairs.map((pair) => (
-                <SwapSuggestion 
-                    key={title+pair[0].asset+pair[1].asset}
-                    asset1={pair[0].asset}
-                    logo1={pair[0].image}
-                    asset2={pair[1].asset}
-                    logo2={pair[1].image}
+                loaded && pairs.map((pair) => {
+                const pool = pools.mainnet[pair]
+                const assetFrom = tokens.mainnet[pool.assets[0]]
+                const assetTo = tokens.mainnet[pool.assets[1]]
+                return <SwapSuggestion 
+                    key={pair}
+                    asset1={assetFrom.symbol}
+                    logo1={assetFrom.icon}
+                    asset2={assetTo.symbol}
+                    logo2={assetTo.icon}
                     onClick={() => {
                         setSwapValue({
-                            assetFrom: pair[0].asset,
-                            assetTo: pair[1].asset,
+                            pool: pair,
+                            assetFrom: assetFrom.token,
+                            assetTo: assetTo.token,
                             step: 'amount'
                         })
                     }}
                     onKeyUp = {(e) =>{
                         if (e.key === 'Enter') {
                             setSwapValue({
-                                assetFrom: pair[0].asset,
-                                assetTo: pair[1].asset,
+                                pool: pair,
+                                assetFrom: assetFrom.token,
+                                assetTo: assetTo.token,
                                 step: 'amount'
                             })
                         }
                     }}
                     ></SwapSuggestion>
-                ))
+                })
             }
         </div>
     )

@@ -1,8 +1,25 @@
 .suggestions-container{
-    max-width: 100%;
-    overflow: auto;
+    max-height: 90%;
     display: flex;
     flex-flow: row wrap;
-    height: 200px;
+    max-width: 300px;
     justify-content: center;
+    width: 20%;
+    position: absolute;
+    padding: 16px;
   }
+
+@media (max-width:1200px) {
+    .suggestions-container{
+        bottom: 0px;
+          width: 100%;
+          /* flex-wrap: wrap; */
+          /* flex-direction: row; */
+          max-height: 202px;
+          /* display: contents; */
+          overflow: auto;
+          display: flex;
+          padding: 0px;
+          max-width: none;
+      }
+}
