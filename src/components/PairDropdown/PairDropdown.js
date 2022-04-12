@@ -7,7 +7,16 @@ import tokens from '../../data/tokens.js'
 export default class PairDropdown extends Component {
     constructor(props) {
         super(props)
-        this.availablePairs = Object.keys(pools.mainnet).map((l)=>({pool:l,focused:false}))
+        this.availablePairs = Object.keys(pools.mainnet).map((pool)=>({
+            pool: pool,
+            from: tokens.mainnet[pools.mainnet[pool].assets[0]],
+            to: tokens.mainnet[pools.mainnet[pool].assets[1]],
+            focused:false}))
+        this.availablePairs = this.availablePairs.concat(Object.keys(pools.mainnet).map((pool)=>({
+            pool: pool,
+            from: tokens.mainnet[pools.mainnet[pool].assets[1]],
+            to: tokens.mainnet[pools.mainnet[pool].assets[0]],
+            focused:false})))
         this.state = {
           isListOpen: false,
           suggestionsShown: this.availablePairs,
@@ -21,7 +30,7 @@ export default class PairDropdown extends Component {
         this.setState(prevState => ({
           isListOpen: text.length>0,
           suggestionsShown : this.availablePairs.filter(pair => {
-              var filteredStrings = {search: text.toUpperCase(), select: (pair.pair.from.asset + pair.pair.to.asset).toUpperCase()}
+              var filteredStrings = {search: text.toUpperCase(), select: (pair.from.symbol + pair.to.symbol).toUpperCase()}
               var intersection = (filteredStrings.select.match(new RegExp('[' + filteredStrings.search + ']', 'g')) || []).join('');
               return intersection.length >= text.length
           }),
@@ -105,15 +114,15 @@ export default class PairDropdown extends Component {
                         {isListOpen && suggestionsShown.map((pair, index) => (
                         <div className="dd-list-item">
                             <PairDropdownItem 
-                                    asset1={pair.pair.from.asset}
-                                    logo1={pair.pair.from.image}
-                                    asset2={pair.pair.to.asset}
-                                    logo2={pair.pair.to.image}
+                                    asset1={pair.from.symbol}
+                                    logo1={pair.from.icon}
+                                    asset2={pair.to.symbol}
+                                    logo2={pair.to.icon}
                                     focused={pair.focused}
                                     onClick={() => {
                                         setSwapValue({
-                                            assetFrom: pair.pair.from.asset,
-                                            assetTo: pair.pair.to.asset,
+                                            assetFrom: pair.from.token,
+                                            assetTo: pair.to.asset,
                                             step: 'amount'
                                         })
                                         this.closeWindow();
@@ -121,8 +130,8 @@ export default class PairDropdown extends Component {
                                     onKeyUp = {(e) =>{
                                         if (e.key === 'Enter') {
                                             setSwapValue({
-                                                assetFrom: pair.pair.from.asset,
-                                                assetTo: pair.pair.to.asset,
+                                                assetFrom: pair.from.token,
+                                                assetTo: pair.to.token,
                                                 step: 'amount'
                                             })
                                             this.closeWindow();

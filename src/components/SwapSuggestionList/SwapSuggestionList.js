@@ -37,16 +37,18 @@ export default function SwapSuggestionList(props) {
                     logo2={assetTo.icon}
                     onClick={() => {
                         setSwapValue({
-                            assetFrom: pair[0].asset,
-                            assetTo: pair[1].asset,
+                            pool: pair,
+                            assetFrom: assetFrom.symbol.token,
+                            assetTo: assetTo.symbol.token,
                             step: 'amount'
                         })
                     }}
                     onKeyUp = {(e) =>{
                         if (e.key === 'Enter') {
                             setSwapValue({
-                                assetFrom: pair[0].asset,
-                                assetTo: pair[1].asset,
+                                pool: pair,
+                                assetFrom: assetFrom.symbol.token,
+                                assetTo: assetTo.symbol.token,
                                 step: 'amount'
                             })
                         }

@@ -28,8 +28,8 @@ const suggestions = [
 ]
 
 const swapValueInit = {
-    assetFrom: {asset:'UST',amount:0},
-    assetTo: {asset:'LUNA'},
+    assetFrom: {asset:'uusd',amount:0},
+    assetTo: {asset:'uluna'},
     step : 'pair'
 }
 

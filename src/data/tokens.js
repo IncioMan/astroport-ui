@@ -12,6 +12,12 @@ module.exports = {
         token: "uluna",
         icon: 'https://assets.terra.money/icon/60/Luna.png'
     },
+    terra100yeqvww74h4yaejj6h733thgcafdaukjtw397: {
+        protocol: "Apollo DAO Token",
+        symbol: "APOLLO",
+        token: "terra100yeqvww74h4yaejj6h733thgcafdaukjtw397",
+        icon: "https://extraterra-assets.s3.us-east-2.amazonaws.com/images/APOLLO60.png"
+    },
     terra1kc87mu460fwkqte29rquh4hc20m54fxwtsx7gp: {
       protocol: "Anchor",
       symbol: "bLuna",
