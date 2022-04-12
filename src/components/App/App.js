@@ -8,7 +8,8 @@ import React, { useEffect, useReducer, useRef } from 'react';
 const mostPopularsSwaps = [
     'terra1m6ywlgn6wrjuagcmmezzz2a029gtldhey5k552',
     'terra1j66jatn3k50hjtg2xemnjm8s7y8dws9xqa5y8w',
-    'terra1qr2k6yjjd5p2kaewqvg93ag74k6gyjr7re37fs']
+    'terra1qr2k6yjjd5p2kaewqvg93ag74k6gyjr7re37fs',
+'terra170x0m3vmc7s5pdvpt5lh9n6wfmsz6wcykcr0vg']
 const recentSwaps = [
     'terra143xxfw5xf62d5m32k3t4eu9s82ccw80lcprzl9',
     'terra1mxyp5z27xxgmv70xpqjk7jvfq54as9dfzug74m',

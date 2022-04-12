@@ -1,5 +1,27 @@
 module.exports = {
   mainnet: {
+    terra14v9wrjs55qsn9lkvylsqela3w2ytwxzkycqzcr:{
+      protocol: "SAYVE",
+      symbol: "SAYVE",
+      name: "SAYVE",
+      token: "terra14v9wrjs55qsn9lkvylsqela3w2ytwxzkycqzcr",
+      icon: "	https://extraterra-assets.s3.us-east-2.amazonaws.com/images/SAYVE100.png",
+      decimals: 6
+    },
+    terra12hgwnpupflfpuual532wgrxu2gjp0tcagzgx4n: {
+      protocol: "Mars",
+      symbol: "MARS",
+      name: "Mars",
+      token: "terra1a7zxk56c72elupp7p44hn4k94fsvavnhylhr6h",
+      icon: "https://marsprotocol.io/mars_logo_colored.svg",
+      decimals: 6
+    },
+    terra1mt2ytlrxhvd5c4d4fshxxs3zcus3fkdmuv4mk2:{
+      protocol: "Brokkr Brotocol",
+      symbol: "BRO",
+      token: "terra1mt2ytlrxhvd5c4d4fshxxs3zcus3fkdmuv4mk2",
+      icon: "https://brokkr.finance/img/brokkr_full_logo.b2827905.svg"
+    },
     uusd: {
         protocol: "Native",
         symbol: "UST",
