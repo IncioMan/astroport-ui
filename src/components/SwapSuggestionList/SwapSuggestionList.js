@@ -3,7 +3,7 @@ import SwapSuggestion from '../SwapSuggestion/SwapSuggestion'
 import { TailSpin } from  'react-loader-spinner'
 import './SwapSuggestionList.css'
 import SwapContext from '../SwapContainer/SwapContext';
-import pools, { mainnet } from '../../data/astroport.dex.js'
+import pools from '../../data/astroport.dex.js'
 import tokens from '../../data/tokens.js'
 
 export default function SwapSuggestionList(props) {
@@ -38,8 +38,8 @@ export default function SwapSuggestionList(props) {
                     onClick={() => {
                         setSwapValue({
                             pool: pair,
-                            assetFrom: assetFrom.symbol.token,
-                            assetTo: assetTo.symbol.token,
+                            assetFrom: assetFrom.token,
+                            assetTo: assetTo.token,
                             step: 'amount'
                         })
                     }}
@@ -47,8 +47,8 @@ export default function SwapSuggestionList(props) {
                         if (e.key === 'Enter') {
                             setSwapValue({
                                 pool: pair,
-                                assetFrom: assetFrom.symbol.token,
-                                assetTo: assetTo.symbol.token,
+                                assetFrom: assetFrom.token,
+                                assetTo: assetTo.token,
                                 step: 'amount'
                             })
                         }

@@ -3,15 +3,7 @@ import AssetToSwap from '../AssetToSwap/AssetToSwap'
 import SwapContext from './SwapContext';
 import tokens from '../../data/tokens.js'
 
-const logos = {
-    'UST':'https://assets.terra.money/icon/60/UST.png',
-    'LUNA':'https://assets.terra.money/icon/60/Luna.png',
-    'wAVAX':'https://app.astroport.fi/tokens/avax.png',
-    'MINE':'https://assets.pylon.rocks/logo/MINE.png',
-    'bLUNA':'https://whitelist.anchorprotocol.com/logo/bLUNA.png',
-    'APOLLO':'https://d14knz87alb4l4.cloudfront.net/icons/APOLLO.png', 
-    'ANC': 'https://whitelist.anchorprotocol.com/logo/ANC.png' 
-  }
+
 
 export default function SwapContainer() {
     const {swapValue, setSwapValue} = useContext(SwapContext);
