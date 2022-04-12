@@ -11,9 +11,8 @@
   background-color: #000d37;
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
 }
@@ -42,8 +41,15 @@ body {
   font-size: 34px;
 }
 
+.asset-selection-container-outer{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
 
-
+.asset-selection-container-inner{
+    max-width: 600px;
+}
 
 
 input {
@@ -98,4 +104,10 @@ input:focus::placeholder {
 
 .swap-button:active{
     opacity: 0.7;
+}
+
+.swap-button:focus-visible{
+    outline: none;
+    border: solid;
+    border-width: 2px;
 }

@@ -38,8 +38,9 @@
     margin: 10px;
     display: flex;
     align-items: center;
-    border-style: solid;
-    border-radius: 30px;
+    /* border-style: solid; */
+    /* border-radius: 30px; */
+    border-bottom: solid;
     padding: 0px 23px;
     border-width: 1px;
     cursor: pointer;

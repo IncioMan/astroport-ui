@@ -42,7 +42,7 @@ module.exports = {
     },
     terra1kc87mu460fwkqte29rquh4hc20m54fxwtsx7gp: {
       protocol: "Anchor",
-      symbol: "bLuna",
+      symbol: "bLUNA",
       token: "terra1kc87mu460fwkqte29rquh4hc20m54fxwtsx7gp",
       icon: "https://whitelist.anchorprotocol.com/logo/bLUNA.png"
     },
@@ -636,7 +636,7 @@ module.exports = {
     },
     terra1u0t35drzyy0mujj8rkdyzhe264uls4ug3wdp3x: {
       protocol: "Anchor",
-      symbol: "bLuna",
+      symbol: "bLUNA",
       token: "terra1u0t35drzyy0mujj8rkdyzhe264uls4ug3wdp3x",
       icon: "https://whitelist.anchorprotocol.com/logo/bLUNA.png"
     },

@@ -8,16 +8,16 @@ import tokens from '../../data/tokens.js'
 const axios = require('axios').default;
 
 export default function SwapSuggestionList(props) {
-    const {title} = props
+    const {title, url} = props
     const {setSwapValue} = useContext(SwapContext);
     const [loaded, setLoaded] = useState(false);
     const [pairs, setPairs] = useState([]);
 
     useEffect(()=>{
-        axios.get('https://api.flipsidecrypto.com/api/v2/queries/786bfe99-df83-4285-adb0-834db5101b0e/data/latest')
+        axios.get(url)
         .then(function (response) {
             // handle success
-            setPairs(response.data.map((p)=>p["POOL_ADDRESS"]).slice(0,4))
+            setPairs(response.data.map((p)=>p["POOL_ADDRESS"]).filter(p=>Object.keys(pools.mainnet).includes(p)).slice(0,5))
             setLoaded(true)
         })
         .catch(function (error) {

@@ -5,27 +5,11 @@ import SwapContext from '../SwapContainer/SwapContext';
 import './App.css';
 import React, { useEffect, useReducer, useRef } from 'react';
 
-const mostPopularsSwaps = [
-    'terra1m6ywlgn6wrjuagcmmezzz2a029gtldhey5k552',
-    'terra1j66jatn3k50hjtg2xemnjm8s7y8dws9xqa5y8w',
-    'terra1qr2k6yjjd5p2kaewqvg93ag74k6gyjr7re37fs',
-'terra170x0m3vmc7s5pdvpt5lh9n6wfmsz6wcykcr0vg']
-const recentSwaps = [
-    'terra143xxfw5xf62d5m32k3t4eu9s82ccw80lcprzl9',
-    'terra1mxyp5z27xxgmv70xpqjk7jvfq54as9dfzug74m',
-    'terra1m95udvvdame93kl6j2mk8d03kc982wqgr75jsr']
-const suggestedSwaps= [
-    'terra1v5ct2tuhfqd0tf8z0wwengh4fg77kaczgf6gtx',
-    'terra134m8n2epp0n40qr08qsvvrzycn2zq4zcpmue48',
-    'terra15s2wgdeqhuc4gfg7sfjyaep5cch38mwtzmwqrx']
-
 const suggestions = [
     {title:'MOST POPULAR',
-     data: mostPopularsSwaps},
-    {title:'RECENT',
-    data: recentSwaps},
-    {title:'SUGGESTED',
-    data: suggestedSwaps}
+     url: 'https://api.flipsidecrypto.com/api/v2/queries/fccaf886-c92d-4202-bfb5-3ff804e9c383/data/latest'},
+    {title:'TRENDING',
+     url: 'https://api.flipsidecrypto.com/api/v2/queries/786bfe99-df83-4285-adb0-834db5101b0e/data/latest'},
 ]
 
 const swapValueInit = {
@@ -64,12 +48,14 @@ function App() {
     <div className='App'>
       <SwapContext.Provider value={{swapValue, setSwapValue}}>
         <div className='App-header'>
-            <div className='asset-selection-container'>
-                <PairDropdown/>
-                <SwapContainer/>
-                <button ref={swapRef} tabindex="4" className='swap-button' type="button">SWAP</button>
-            </div>
             <SwapSuggestionsContainer suggestions={suggestions}/>
+            <div className='asset-selection-container-outer'>
+                <div className='asset-selection-container-inner'>
+                    <PairDropdown/>
+                    <SwapContainer/>
+                    <button ref={swapRef} tabindex="4" className='swap-button' type="button">SWAP</button>
+                </div>
+            </div>
         </div>
       </SwapContext.Provider>
     </div>
