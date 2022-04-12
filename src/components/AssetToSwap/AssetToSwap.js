@@ -26,7 +26,8 @@ export default function AssetToSwap(props) {
 
     return (
             <div className={className}>
-                <p>{asset}</p>
+                <div className='current-balance'>0.09</div>
+                <div className='asset-name'>{asset}</div>
                 <div className='asset-container'>
                     {(owned &&
                     <>

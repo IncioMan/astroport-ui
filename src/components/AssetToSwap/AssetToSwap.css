@@ -7,11 +7,22 @@
     flex-wrap: wrap;
 }
 
+.current-balance{
+    font-size: 13px;
+    opacity: 0.5;
+    min-height: 20px;
+}
+
 .asset-outer-input{
-    padding-top: 5px;
+    padding-top: 60px;
   }
 
+.asset-name{
+  margin-bottom: 30px;
+}
+
 .asset-outer{
+    padding-top: 60px;
     min-width: 120px;
   }
   
