@@ -16,15 +16,15 @@
 }
 
 .suggest-logo-from{
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
     padding-left: 10px;
     padding-top: 4px;
 }
 
 .suggest-logo-to{
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
     padding-right: 10px;
     padding-left: 10px;
     padding-top: 4px;
@@ -40,12 +40,12 @@
     align-items: center;
     border-style: solid;
     border-radius: 30px;
-    padding: 0px 30px;
+    padding: 0px 23px;
     border-width: 1px;
     cursor: pointer;
-    opacity: 0.7;
-    font-size: 20px;
-    width: 260px;
+    opacity: 0.5;
+    font-size: 14px;
+    width: 190px;
     justify-content: center;
 }
 
