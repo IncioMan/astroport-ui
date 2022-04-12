@@ -10,6 +10,11 @@
     min-height: 100px;
 }
 
+.suggestion-category-name-outer{
+    width: 100%;
+    overflow-x: auto;
+}
+
 [data-testid=tail-spin-loading]{
     margin: auto;
 }

@@ -57,7 +57,6 @@ function App() {
                     <button ref={swapRef} tabindex="4" className='swap-button' type="button">SWAP</button>
                 </div>
             </div>
-            <SwapSuggestionsContainer suggestions={suggestions}/>
         </div>
       </SwapContext.Provider>
     </div>

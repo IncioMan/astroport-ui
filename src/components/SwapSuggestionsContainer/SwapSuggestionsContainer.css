@@ -11,15 +11,6 @@
 
 @media (max-width:1200px) {
     .suggestions-container{
-        bottom: 0px;
-          width: 100%;
-          /* flex-wrap: wrap; */
-          /* flex-direction: row; */
-          max-height: 202px;
-          /* display: contents; */
-          overflow: auto;
-          display: flex;
-          padding: 0px;
-          max-width: none;
+          display: none;
       }
 }

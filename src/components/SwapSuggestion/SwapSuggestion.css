@@ -35,19 +35,19 @@
 }
 
 .suggest-container{
-    margin: 10px;
+    margin: 10px 0px;
     display: flex;
     align-items: center;
     /* border-style: solid; */
     /* border-radius: 30px; */
     border-bottom: solid;
-    padding: 0px 23px;
     border-width: 1px;
     cursor: pointer;
     opacity: 0.5;
     font-size: 14px;
-    width: 190px;
-    justify-content: center;
+    max-width: 190px;
+    min-width: 100%;
+    justify-content: space-evenly;
 }
 
 .suggest-asset-container-from{

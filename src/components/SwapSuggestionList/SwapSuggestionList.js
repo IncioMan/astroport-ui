@@ -30,7 +30,7 @@ export default function SwapSuggestionList(props) {
     })
 
     return (
-        <div>
+        <div className='suggestion-category-name-outer'>
             <p className='suggestion-category-name'>{title}</p>
             {(!loaded) && <div className='suggestion-loading-container'>
                 <TailSpin className="loading" height="40" width="40" color='#ffffff'ariaLabel='loading'/>
