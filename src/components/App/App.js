@@ -1,6 +1,7 @@
 import SwapSuggestionsContainer from '../SwapSuggestionsContainer/SwapSuggestionsContainer';
 import SwapContainer from '../SwapContainer/SwapContainer';
 import PairDropdown from '../PairDropdown/PairDropdown';
+import ProfileContainer from '../ProfileContainer/ProfileContainer';
 import SwapContext from '../SwapContainer/SwapContext';
 import './App.css';
 import React, { useEffect, useReducer, useRef } from 'react';
@@ -50,6 +51,11 @@ function App() {
       <SwapContext.Provider value={{swapValue, setSwapValue}}>
         <div className='App-header'>
             <SwapSuggestionsContainer suggestions={suggestions}/>
+            <ProfileContainer tokens={['uluna',
+                                       'uusd',
+                                       'terra1hj8de24c3yqvcsv9r8chr03fzwsak3hgd8gv3m',
+                                       'terra1xfsdgcemqwxp4hhnyk4rle6wr22sseq7j07dnn',
+                                       'terra12hgwnpupflfpuual532wgrxu2gjp0tcagzgx4n']}/>
             <div className='asset-selection-container-outer'>
                 <div className='asset-selection-container-inner'>
                     <PairDropdown/>

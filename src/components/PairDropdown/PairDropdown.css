@@ -26,5 +26,5 @@
 
 .dd-suggest-container:focus-visible{
   outline: none;
-  border-style: solid;
+  border-bottom-style: solid;
 }

@@ -1,4 +1,4 @@
-.suggestions-container{
+.profile-container{
     max-height: 90%;
     display: flex;
     flex-flow: row wrap;
@@ -6,11 +6,12 @@
     justify-content: center;
     width: 16%;
     position: absolute;
-    padding: 16px;
+    right: 0px;
+    padding: 0px 30px;
   }
 
 @media (max-width:1040px) {
-    .suggestions-container{
+    .profile-container{
           display: none;
       }
 }

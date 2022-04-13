@@ -1,0 +1,32 @@
+.suggestion-category-name{
+    opacity: 0.8;
+    font-size: 12px
+}
+
+.balance-logo{
+    width: 20px;
+    height: 20px;
+    padding-right: 8px;
+}
+
+.balance-asset-container{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    
+}
+
+.balance-container{
+    border-bottom: solid;
+    display: flex;
+    font-size: 16px;
+    padding: 3px 10px;
+    align-items: end;
+    opacity: 0.7;
+    justify-content: space-between;
+    margin: 10px 0px;
+}
+
+[data-testid=tail-spin-loading]{
+    margin: auto;
+}
