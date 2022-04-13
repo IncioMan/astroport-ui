@@ -12,7 +12,7 @@ module.exports = {
       protocol: "Wrapped AVAX",
       name: "Wrapped AVAX",
       symbol: "WAVAX",
-      token: "terra190tqwgqx7s8qrknz6kckct7v607cu068gfujpk",
+      token: "terra1hj8de24c3yqvcsv9r8chr03fzwsak3hgd8gv3m",
       icon: "https://app.astroport.fi/tokens/avax.png",
       decimals: 6
     },
