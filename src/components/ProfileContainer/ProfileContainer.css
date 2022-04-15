@@ -7,10 +7,11 @@
     width: 16%;
     position: absolute;
     left: 0px;
-    padding: 0px 30px;
+    padding: 0px 50px;
+    min-height: 60%;
   }
 
-@media (max-width:1040px) {
+@media (max-width:880px) {
     .profile-container{
           display: none;
       }

@@ -15,6 +15,12 @@
     margin: 5px 0px;
 }
 
+@media (max-width:1200px) {
+    .suggest-asset {
+       display: none;
+    }
+}
+
 .suggest-logo-from{
     width: 20px;
     height: 20px;

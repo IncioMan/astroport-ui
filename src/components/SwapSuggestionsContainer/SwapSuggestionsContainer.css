@@ -6,11 +6,11 @@
     justify-content: center;
     width: 16%;
     position: absolute;
-    padding: 0px 30px;
+    padding: 0px 50px;
     right: 0px;
   }
 
-@media (max-width:1040px) {
+@media (max-width:880px) {
     .suggestions-container{
           display: none;
       }
