@@ -45,6 +45,7 @@
     opacity: 0.7;
     justify-content: space-between;
     margin: 10px 0px;
+    border-width: 1px;
 }
 
 [data-testid=tail-spin-loading]{
