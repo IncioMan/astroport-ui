@@ -9,11 +9,31 @@
     padding-right: 8px;
 }
 
+.balance-amount{
+    align-items: center;
+    display: flex;
+    min-width: 30%;
+    justify-content: right;
+    padding-right: 10px;
+}
+
 .balance-asset-container{
     display: flex;
     align-items: center;
     justify-content: start;
-    
+    min-width: 40%;   
+}
+
+@media (max-width:1400px) {
+    .balance-asset{
+        display: none;
+    }
+    .balance-asset-container{
+        min-width: 10%;   
+    }
+    .balance-amount{
+        min-width: 45%;
+    }
 }
 
 .balance-container{

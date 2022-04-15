@@ -7,11 +7,16 @@ const axios = require('axios').default;
 
 export default function BalanceToken(props) {
     const {token} = props
+    const [price, setPrice] = useState(0);
     const [loaded, setLoaded] = useState(false);
+    const tokenInfo = tokens.mainnet[token]
 
     useEffect(()=>{
-        axios.get('')
+        axios.get('https://api.extraterrestrial.money/v1/api/prices?symbol='+tokenInfo.symbol)
         .then(function (response) {
+            if(tokenInfo.symbol  in response.data.prices){
+                setPrice(response.data.prices[tokenInfo.symbol].price)
+            }
             // handle success
             //setPairs(response.data.map((p)=>p["POOL_ADDRESS"]).filter(p=>Object.keys(pools.mainnet).includes(p)).slice(0,5))
             setTimeout(()=>setLoaded(true),5000)
@@ -25,7 +30,8 @@ export default function BalanceToken(props) {
         });
     })
 
-    const tokenInfo = tokens.mainnet[token]
+    const amount = Math.floor(Math.random() * 1000)
+
     return (
             <div className='balance-container'>
                 <div className='balance-asset-container'>
@@ -36,7 +42,11 @@ export default function BalanceToken(props) {
                     <TailSpin className="loading" height="20" width="20" color='#ffffff'ariaLabel='loading'/>
                 </div>
                 }
-                {(loaded)&&<div className='balance-amount'>{Math.floor(Math.random() * 100)}</div>}
+                {(loaded)&&
+                <>
+                    <div className='balance-amount'>{amount}</div>
+                    <div className='balance-amount'>{Math.round(price*amount*100)/100}$</div>
+                </>}
             </div>
     )
 }
