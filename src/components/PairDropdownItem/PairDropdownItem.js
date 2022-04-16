@@ -10,7 +10,7 @@ export default function PairDropdownItem(props) {
       }, [focused]);
 
     return (
-        <div onClick={onClick} on onKeyDown={onKeyDown} onKeyUp={onKeyUp} tabindex="2" ref={itemRef} className='dd-suggest-container'>
+        <div onClick={onClick} on onKeyDown={onKeyDown} onKeyUp={onKeyUp} tabIndex="2" ref={itemRef} className='dd-suggest-container'>
             <div className='dd-item-asset-container'>
                 <p className='dd-suggest-asset'>{asset1}</p>
                 <img className='dd-suggest-logo' src={logo1} width="30" alt="Italian Trulli"></img>

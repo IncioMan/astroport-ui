@@ -4,7 +4,7 @@ import './SwapSuggestion.css'
 export default function SwapSuggestion(props) {
     const { asset1, logo1, asset2, logo2, onClick, onKeyUp} = props;
     return (
-        <div onClick={onClick} onKeyUp={onKeyUp} tabindex="6" className='suggest-container'>
+        <div onClick={onClick} onKeyUp={onKeyUp} tabIndex="6" className='suggest-container'>
             <div className='suggest-asset-container-from'>
                 <p className='suggest-asset'>{asset1}</p>
                 <img className='suggest-logo-from' src={logo1} width="30" alt="Italian Trulli"></img>

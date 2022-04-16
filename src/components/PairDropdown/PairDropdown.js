@@ -96,7 +96,7 @@ export default class PairDropdown extends Component {
         const { isListOpen, suggestionsShown, inputText} = this.state;
         return (
           <div className="dd-wrapper">
-            <input  tabindex="1" placeholder="Swap Pair" type="text" ref={this.inputRef}
+            <input  tabIndex="1" placeholder="Swap Pair" type="text" ref={this.inputRef}
                     value={inputText} 
                     onChange={(e)=>{
                         this.processInput(e.target.value)

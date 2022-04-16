@@ -48,7 +48,7 @@ export default function AssetToSwap(props) {
                     {(owned &&
                     <>
                         <input  onChange={onChange}
-                                tabindex="3" 
+                                tabIndex="3" 
                                 ref={inputRef} className='amount-input' 
                                 placeholder="0" type="number"
                                 onKeyUp = {(e) =>{
@@ -63,7 +63,6 @@ export default function AssetToSwap(props) {
                         <img className='asset-logo-to' src={logo} width="40" alt="Italian Trulli"></img>
                         <div className='amount-calculated'>{amount}</div>
                     </>)}   
-                    
                 </div>
             </div>
     )

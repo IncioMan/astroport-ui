@@ -1,15 +1,41 @@
 
 import React, { useContext, useEffect, useState } from 'react';
+import { useConnectedWallet, useLCDClient, useWallet, WalletStatus} from '@terra-money/wallet-provider';
 import { TailSpin } from  'react-loader-spinner'
 import './BalanceToken.css'
 import tokens from '../../data/tokens.js'
 const axios = require('axios').default;
 
 export default function BalanceToken(props) {
-    const {token} = props
-    const [price, setPrice] = useState(0);
-    const [loaded, setLoaded] = useState(false);
+    const {token, native} = props
+    const [price, setPrice] = useState(null);
+    const [amount, setAmount] = useState(null);
+    const [loaded, setLoaded] = useState(true);
     const tokenInfo = tokens.mainnet[token]
+
+    const lcd = useLCDClient();
+    const connectedWallet = useConnectedWallet();
+
+    const {status} = useWallet();
+    
+    useEffect(() => {
+        if (native) {
+            if(connectedWallet){
+                setLoaded(false)
+                lcd.bank.balance(connectedWallet.walletAddress).then(([coins]) => {
+                    if(token in coins['_coins']){
+                        setAmount(coins['_coins'][token].amount/1000000)
+                        setLoaded(true)
+                    }
+                    else{
+                        setAmount(0)
+                        setLoaded(true)
+                    }
+                });
+        }} else {
+            setAmount(Math.floor(Math.random() * 1000))
+        }
+      }, [connectedWallet, lcd]);
 
     useEffect(()=>{
         axios.get('https://api.extraterrestrial.money/v1/api/prices?symbol='+tokenInfo.symbol)
@@ -17,9 +43,6 @@ export default function BalanceToken(props) {
             if(tokenInfo.symbol  in response.data.prices){
                 setPrice(response.data.prices[tokenInfo.symbol].price)
             }
-            // handle success
-            //setPairs(response.data.map((p)=>p["POOL_ADDRESS"]).filter(p=>Object.keys(pools.mainnet).includes(p)).slice(0,5))
-            setTimeout(()=>setLoaded(true),5000)
         })
         .catch(function (error) {
             // handle error
@@ -30,7 +53,12 @@ export default function BalanceToken(props) {
         });
     })
 
-    const amount = Math.floor(Math.random() * 1000)
+    useEffect(()=>{
+        if(status!==WalletStatus.WALLET_CONNECTED){
+            setAmount(null)
+        }
+    }, [status])
+
 
     return (
             <div className='balance-container'>
@@ -42,10 +70,22 @@ export default function BalanceToken(props) {
                     <TailSpin className="loading" height="20" width="20" color='#ffffff'ariaLabel='loading'/>
                 </div>
                 }
-                {(loaded)&&
+                {(loaded&&price&&status==WalletStatus.WALLET_CONNECTED)&&
                 <>
-                    <div className='balance-amount'>{amount}</div>
-                    <div className='balance-amount'>{Math.round(price*amount*100)/100}$</div>
+                    <div className='balance-amount'>{Math.round(amount*100)/100}</div>
+                    <div className='balance-amount'>{
+                        price*amount <= 1000?Math.round(price*amount*100)/100:Math.round((price*amount/1000)*100)/100+'k'}$
+                    </div>
+                </>}
+                {(loaded&&!price&&status==WalletStatus.WALLET_CONNECTED)&&
+                <>
+                    <div className='balance-amount'>{Math.round(amount*100)/100}</div>
+                    <div className='balance-amount'>-</div>
+                </>}
+                {(status!==WalletStatus.WALLET_CONNECTED)&&
+                <>
+                    <div className='balance-amount'>-</div>
+                    <div className='balance-amount'>-</div>
                 </>}
             </div>
     )

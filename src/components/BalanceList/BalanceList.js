@@ -12,7 +12,9 @@ export default function BalanceList(props) {
             {
                 tokens.map((token) => {
                 return <BalanceToken 
-                        token={token}
+                        key={token.name}
+                        token={token.name}
+                        native={token.native}
                         ></BalanceToken>
                 })
             }
