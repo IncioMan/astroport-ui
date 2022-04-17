@@ -1,5 +1,21 @@
 module.exports = {
   mainnet: {
+    terra1e6mq63y64zcxz8xyu5van4tgkhemj3r86yvgu4:{
+      protocol: "USDC",
+      name: "USDC",
+      symbol: "soUSDC",
+      token: "terra1e6mq63y64zcxz8xyu5van4tgkhemj3r86yvgu4",
+      icon:"https://jup.ag/_next/image?url=https%3A%2F%2Fraw.githubusercontent.com%2Fsolana-labs%2Ftoken-list%2Fmain%2Fassets%2Fmainnet%2FEPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v%2Flogo.png&w=48&q=75",
+      decimals: 6
+    },
+    terra13zaagrrrxj47qjwczsczujlvnnntde7fdt0mau:{
+      protocol: "Prism",
+      name: "Prism cLuna Token",
+      symbol: "cLuna",
+      token: "terra13zaagrrrxj47qjwczsczujlvnnntde7fdt0mau",
+      icon:"https://extraterra-assets.s3.us-east-2.amazonaws.com/images/SVG/cLUNA.svg",
+      decimals: 6
+    },
     terra188w26t95tf4dz77raftme8p75rggatxjxfeknw:{
       protocol: "Kujira sKUJI Token",
       name: "Kujira sKUJI Token",

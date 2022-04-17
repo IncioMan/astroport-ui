@@ -33,8 +33,11 @@ export default class PairDropdown extends Component {
           isListOpen: text.length>0,
           suggestionsShown : this.availablePairs.filter(pair => {
               var filteredStrings = {search: textCleaned.toUpperCase(), select: (pair.from.symbol + pair.to.symbol).toUpperCase()}
-              var intersection = (filteredStrings.select.match(new RegExp('[' + filteredStrings.search + ']', 'g')) || []).join('');
-              return intersection.length >= textCleaned.length
+              for(let c of filteredStrings.search) 
+                if(!filteredStrings.select.includes(c)){
+                    return false;
+                }
+            return true
           }),
           inputText: text
        }))

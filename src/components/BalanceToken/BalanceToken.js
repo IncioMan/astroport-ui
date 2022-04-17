@@ -33,7 +33,13 @@ export default function BalanceToken(props) {
                     }
                 });
         }} else {
-            setAmount(Math.floor(Math.random() * 1000))
+            lcd.wasm.contractQuery(token,
+                        {"balance":
+                            {"address":"terra1uh37lsydrup8vqvvttd53qwj93ft9x7572g62q"}
+                        })
+                        .then((res)=>{
+                            setAmount(res.balance)
+                        })
         }
       }, [connectedWallet, lcd]);
 

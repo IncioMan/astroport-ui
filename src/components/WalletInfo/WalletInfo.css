@@ -47,25 +47,21 @@
 }
 
 .disconnect-button{
-    color: white;
+    color: #ef5176;
 }
 .disconnect-button:hover{
     cursor: pointer;
-    color: red;
 }
 .disconnect-button:active{
     opacity: 0.7;
-    color: red;
 }
 
 .connect-button{
-    color: white;
+    color: #7ee6a2;
 }
 .connect-button:hover{
     cursor: pointer;
-    color: greenyellow;
 }
 .connect-button:active{
     opacity: 0.7;
-    color: greenyellow;
 }
