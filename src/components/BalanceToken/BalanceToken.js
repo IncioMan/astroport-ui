@@ -33,14 +33,15 @@ export default function BalanceToken(props) {
                     }
                 });
         }} else {
+            if(connectedWallet){
             lcd.wasm.contractQuery(token,
                         {"balance":
-                            {"address":"terra1uh37lsydrup8vqvvttd53qwj93ft9x7572g62q"}
+                            {"address":connectedWallet.walletAddress}
                         })
                         .then((res)=>{
                             setAmount(res.balance)
                         })
-        }
+        }}
       }, [connectedWallet, lcd]);
 
     useEffect(()=>{

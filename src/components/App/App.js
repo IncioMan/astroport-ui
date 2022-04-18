@@ -4,9 +4,9 @@ import PairDropdown from '../PairDropdown/PairDropdown';
 import ProfileContainer from '../ProfileContainer/ProfileContainer';
 import SwapContext from '../SwapContainer/SwapContext';
 import './App.css';
-import React, { useEffect, useReducer, useRef } from 'react';
+import React, { useEffect, useReducer, useRef, useState } from 'react';
 import {ConnectSample} from "./ConnectSample"
-import { useWallet, WalletStatus } from '@terra-money/wallet-provider';
+import {useConnectedWallet, useLCDClient, useWallet, WalletStatus } from '@terra-money/wallet-provider';
 import { getChainOptions, WalletProvider } from '@terra-money/wallet-provider';
 import ReactDOM from 'react-dom';
 
@@ -19,7 +19,7 @@ const suggestions = [
 
 
 const swapValueInit = {
-    assetFrom: {asset:'uusd',amount:0},
+    assetFrom: {asset:'uusd',amount:0,amountOwned:0},
     assetTo: {asset:'uluna'},
     step : 'pair'
 }
@@ -44,6 +44,8 @@ function swapValueReducer(state, value) {
 function App() {
   const [swapValue, setSwapValue] = useReducer(swapValueReducer, swapValueInit);
   const swapRef = useRef();
+  const lcd = useLCDClient();
+  const connectedWallet = useConnectedWallet();
 
   useEffect(()=>{
     if(swapValue.step === 'swap'){
@@ -53,8 +55,10 @@ function App() {
 
   const {
     status,
-    connect
+    connect,
   } = useWallet();
+
+
 
 
   return (

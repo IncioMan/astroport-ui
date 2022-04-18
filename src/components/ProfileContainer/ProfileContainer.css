@@ -1,14 +1,14 @@
 .profile-container{
     max-height: 90%;
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: column wrap;
     max-width: 300px;
-    justify-content: center;
+    justify-content: start;
     width: 16%;
     position: absolute;
     left: 0px;
     padding: 0px 50px;
-    min-height: 60%;
+    min-height: 55%;
   }
 
 @media (max-width:880px) {

@@ -62,10 +62,15 @@
   }
 
   input.amount-input{
-    width: 80px;    
+    width: 120px;    
     padding-bottom: 8px;
     font-size: 34px;
     padding-bottom: 5px
+}
+
+input.amount-input-too-high{
+  color: #ef5176;
+  border-color: #ef5176
 }
 
 input.amount-input::placeholder {

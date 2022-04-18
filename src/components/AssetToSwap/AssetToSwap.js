@@ -1,12 +1,13 @@
-import React, { useEffect , useRef, useContext} from 'react';
+import React, { useEffect , useRef, useState, useContext} from 'react';
 import './AssetToSwap.css'
 import SwapContext from '../SwapContainer/SwapContext';
 
 export default function AssetToSwap(props) {
-    const { asset, logo, owned, amount,onChange } = props;
+    const { asset, logo, owned, amountOwned, amount, onChange,} = props;
     const className = owned ? 'asset-outer-input':'asset-outer'
     const inputRef = useRef()
     const {swapValue, setSwapValue} = useContext(SwapContext);
+    const [amountInputted, setAmountInputted] = useState(0);
 
     useEffect(()=>{
         console.log('now step amount')
@@ -27,11 +28,16 @@ export default function AssetToSwap(props) {
     const amountHandler = () => {
         console.log('next swap') 
         setSwapValue({
-            amount: 900
+            amount: amountOwned
         })
         if(inputRef&&inputRef.current){
-            inputRef.current.value = 900
+            inputRef.current.value = amountOwned
         }
+    }
+
+    const onChangeHandler = (e) => {
+       onChange(e);
+       setAmountInputted(e.target.value)
     }
 
     return (
@@ -39,7 +45,7 @@ export default function AssetToSwap(props) {
                 <div className='current-balance'>
                 {(owned && 
                     <>
-                        <div onClick={()=>amountHandler()}>900</div> 
+                        <div onClick={()=>amountHandler()}>{Math.round(amountOwned*100)/100}</div> 
                     </>
                 )}
                 </div>
@@ -47,9 +53,12 @@ export default function AssetToSwap(props) {
                 <div className='asset-container'>
                     {(owned &&
                     <>
-                        <input  onChange={onChange}
+                        <input  step="0.01"
+                                lang="en"
+                                onChange={onChangeHandler}
                                 tabIndex="3" 
-                                ref={inputRef} className='amount-input' 
+                                ref={inputRef} 
+                                className={amountInputted<=amountOwned?'amount-input':'amount-input amount-input-too-high'} 
                                 placeholder="0" type="number"
                                 onKeyUp = {(e) =>{
                                     if (e.key === 'Enter') {
