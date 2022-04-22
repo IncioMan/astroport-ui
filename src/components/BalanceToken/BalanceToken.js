@@ -39,7 +39,7 @@ export default function BalanceToken(props) {
                             {"address":connectedWallet.walletAddress}
                         })
                         .then((res)=>{
-                            setAmount(res.balance)
+                            setAmount(res.balance/1000000)
                         })
         }}
       }, [connectedWallet, lcd]);

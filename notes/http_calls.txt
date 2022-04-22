@@ -5,3 +5,14 @@ npx terra-templates get wallet-provider:create-react-app terra-wallet
 cd terra-wallet
 npm install
 npm start
+
+{
+  "simulation": {
+          "offer_asset":{
+              "info":{
+                  "native_token":{
+                      "denom":"uusd"}
+              },"amount":"1000000"},
+        "max_spread":"0.005","belief_price":"90"
+  }
+}

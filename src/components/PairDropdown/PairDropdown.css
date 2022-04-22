@@ -5,6 +5,7 @@
   max-height: 300px;
   overflow-y: auto;
   width: 330px;
+  padding-left: 20px;
 }
 
 .dd-list-item{

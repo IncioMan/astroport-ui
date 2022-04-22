@@ -9,6 +9,8 @@ import {ConnectSample} from "./ConnectSample"
 import {useConnectedWallet, useLCDClient, useWallet, WalletStatus } from '@terra-money/wallet-provider';
 import { getChainOptions, WalletProvider } from '@terra-money/wallet-provider';
 import ReactDOM from 'react-dom';
+import BalancePriceContext from '../BalancePriceContext/BalancePriceContext';
+import BalancePrice from '../BalancePriceContext/BalancePrice';
 
 const suggestions = [
     {title:'MOST POPULAR',
@@ -64,6 +66,7 @@ function App() {
   return (
     <div className='App'>
       <SwapContext.Provider value={{swapValue, setSwapValue}}>
+        <BalancePrice></BalancePrice>
         <div className='App-header'>
             <SwapSuggestionsContainer suggestions={suggestions}/>
             <ProfileContainer tokens={[{name:'uluna', native:true},
