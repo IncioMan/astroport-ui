@@ -5,13 +5,13 @@ import ProfileContainer from '../ProfileContainer/ProfileContainer';
 import SwapContext from '../SwapContainer/SwapContext';
 import './App.css';
 import React, { useEffect, useReducer, useRef, useState } from 'react';
-import {ConnectSample} from "./ConnectSample"
 import {useConnectedWallet, useLCDClient, useWallet, WalletStatus } from '@terra-money/wallet-provider';
 import { getChainOptions, WalletProvider } from '@terra-money/wallet-provider';
 import ReactDOM from 'react-dom';
 import BalancePriceContext from '../BalancePriceContext/BalancePriceContext';
 const axios = require('axios').default;
 import tokens from '../../data/tokens.js'
+import Dialog from 'react-dialog'
 
 const suggestions = [
     {title:'MOST POPULAR',
@@ -69,6 +69,7 @@ function setBalancePriceReducer(state, value) {
 function App() {
   const [balancePrice, setBalancePrice] = useReducer(setBalancePriceReducer, {});
   const [swapValue, setSwapValue] = useReducer(swapValueReducer, swapValueInit);
+  const [isDialogOpen, setDialogOpen] = useState(false);
   const swapRef = useRef();
   const lcd = useLCDClient();
   const connectedWallet = useConnectedWallet();
@@ -159,7 +160,9 @@ function App() {
     connect,
   } = useWallet();
 
-
+  const openDialog = () => setDialogOpen(true)
+ 
+  const handleClose = () => setDialogOpen(false)
 
 
   return (
@@ -184,12 +187,30 @@ function App() {
                       >Connect Wallet</button>)}
                     {status === WalletStatus.WALLET_CONNECTED && (
                       <button ref={swapRef} tabIndex="4" 
-                      className='swap-button' type="button">SWAP</button>)}
+                      className='swap-button' type="button"
+                      onClick={() => setDialogOpen(true)}>SWAP</button>)}
                 </div>
             </div>
         </div>
         </BalancePriceContext.Provider>
       </SwapContext.Provider>
+      {isDialogOpen &&
+      <Dialog
+          modal={true}
+          height={224}>
+          <button className='close-dialog-button' onClick={()=>handleClose()}>&#10005;</button>
+          <div style={{paddingTop: "10px"}}>
+            <p>This feature will come soon.</p>
+            <p> This version of the app is just a proof of concept.</p>
+            <p>In the meantime, let me know what you think of it.</p>
+            <p>You can also follow me for future developments.</p>
+            <a target="_blank" href={'https://twitter.com/IncioMan/status/1516497140608118788?s=20&t=oJZyB_DCAW0Z8KVzHhEN1A'}>
+            <img src="https://raw.githubusercontent.com/IncioMan/mars_lockdrop/master//images/twitter.png"
+                className='twitter-logo'
+                width={50}/>
+            </a>
+          </div>
+      </Dialog>}
     </div>
   );
 }

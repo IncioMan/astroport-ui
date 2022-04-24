@@ -43,6 +43,37 @@ body {
   }
 }
 
+.twitter-logo{
+  color: black;
+}
+
+.ui-dialog-container {
+  position: fixed;
+    top: 77%;
+    left: 50%;
+}
+.close-dialog-button:hover{
+  cursor: pointer;
+}
+.close-dialog-button{
+  position: absolute;
+    right: 24px;
+    background: transparent;
+    color: white;
+    font-size: 20px;
+    border: none;
+    top: 10px;
+}
+
+.ui-dialog{
+  position: absolute;
+  background: #5544f2;
+  opacity: 95%;
+  color: white;
+  border-radius: 50px;
+  top: -105px;
+}
+
 .swap-container {
   display: flex;
   padding-bottom: 30px;

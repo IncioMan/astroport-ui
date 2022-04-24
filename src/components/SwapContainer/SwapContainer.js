@@ -65,7 +65,7 @@ export default function SwapContainer() {
     }, [swapValue, balancePrice])
 
     useEffect(()=>{
-        if(connectedWallet){
+        if(lcd){
             const pool = swapValue.pool
             const assetFrom = swapValue.assetFrom.asset
             const assetTo= swapValue.assetTo.asset
