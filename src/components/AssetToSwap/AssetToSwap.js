@@ -1,13 +1,29 @@
 import React, { useEffect , useRef, useState, useContext} from 'react';
 import './AssetToSwap.css'
 import SwapContext from '../SwapContainer/SwapContext';
+import BalancePriceContext from '../BalancePriceContext/BalancePriceContext';
 
 export default function AssetToSwap(props) {
-    const { asset, logo, owned, amountOwned, amount, onChange,} = props;
+    const { token, asset, logo, owned, amount, onChange} = props;
     const className = owned ? 'asset-outer-input':'asset-outer'
     const inputRef = useRef()
     const {swapValue, setSwapValue} = useContext(SwapContext);
     const [amountInputted, setAmountInputted] = useState(0);
+    const {balancePrice} = useContext(BalancePriceContext);
+    const [amountOwned, setAmountOwned] = useState(null);
+    const [loaded, setLoaded] = useState(true);
+
+    useEffect(()=>{
+        if(token in balancePrice){
+            if(balancePrice[token].balance=='loading'){
+                setLoaded(false)
+            }else{
+                setLoaded(true)
+            }
+            setAmountOwned(balancePrice[token].balance)
+        }
+
+    }, [balancePrice])
 
     useEffect(()=>{
         console.log('now step amount')
@@ -31,7 +47,7 @@ export default function AssetToSwap(props) {
             amount: amountOwned
         })
         if(inputRef&&inputRef.current){
-            inputRef.current.value = amountOwned
+            inputRef.current.value = Math.round(amountOwned*100-1)/100
         }
     }
 

@@ -128,6 +128,7 @@ export default class PairDropdown extends Component {
                                         setSwapValue({
                                             assetFrom: pair.from.token,
                                             assetTo: pair.to.asset,
+                                            pool: pair.pool,
                                             step: 'amount'
                                         })
                                         this.closeWindow();
@@ -137,6 +138,7 @@ export default class PairDropdown extends Component {
                                             setSwapValue({
                                                 assetFrom: pair.from.token,
                                                 assetTo: pair.to.token,
+                                                pool: pair.pool,
                                                 step: 'amount'
                                             })
                                             this.closeWindow();

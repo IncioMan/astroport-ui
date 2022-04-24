@@ -1,0 +1,21 @@
+.swaps-metrics-container{
+    display: flex;
+    font-size: 13px;
+    justify-content: space-around;
+    opacity: 0.5;
+    border-top: solid;
+    padding: 10px 0px;
+}
+
+.swaps-metrics-swap-rate{
+    align-items: unset;
+    /* height: 100px; */
+    display: flex;
+    justify-content: initial;
+    flex-direction: column;
+    width: 40%;
+}
+
+.swaps-metrics-eq-dist{
+    width: 30%;
+}

@@ -1,71 +1,34 @@
 
 import React, { useContext, useEffect, useState } from 'react';
-import { useConnectedWallet, useLCDClient, useWallet, WalletStatus} from '@terra-money/wallet-provider';
+import {useWallet, WalletStatus} from '@terra-money/wallet-provider';
 import { TailSpin } from  'react-loader-spinner'
 import './BalanceToken.css'
+import BalancePriceContext from '../BalancePriceContext/BalancePriceContext';
 import tokens from '../../data/tokens.js'
-const axios = require('axios').default;
 
 export default function BalanceToken(props) {
-    const {token, native} = props
+    const {token} = props
+    const {balancePrice} = useContext(BalancePriceContext);
     const [price, setPrice] = useState(null);
     const [amount, setAmount] = useState(null);
     const [loaded, setLoaded] = useState(true);
     const tokenInfo = tokens.mainnet[token]
-
-    const lcd = useLCDClient();
-    const connectedWallet = useConnectedWallet();
-
     const {status} = useWallet();
     
-    useEffect(() => {
-        if (native) {
-            if(connectedWallet){
+
+
+    useEffect(()=>{
+        if(tokenInfo.token in balancePrice){
+            if(balancePrice[tokenInfo.token].balance=='loading'){
                 setLoaded(false)
-                lcd.bank.balance(connectedWallet.walletAddress).then(([coins]) => {
-                    if(token in coins['_coins']){
-                        setAmount(coins['_coins'][token].amount/1000000)
-                        setLoaded(true)
-                    }
-                    else{
-                        setAmount(0)
-                        setLoaded(true)
-                    }
-                });
-        }} else {
-            if(connectedWallet){
-            lcd.wasm.contractQuery(token,
-                        {"balance":
-                            {"address":connectedWallet.walletAddress}
-                        })
-                        .then((res)=>{
-                            setAmount(res.balance/1000000)
-                        })
-        }}
-      }, [connectedWallet, lcd]);
-
-    useEffect(()=>{
-        axios.get('https://api.extraterrestrial.money/v1/api/prices?symbol='+tokenInfo.symbol)
-        .then(function (response) {
-            if(tokenInfo.symbol  in response.data.prices){
-                setPrice(response.data.prices[tokenInfo.symbol].price)
+            }else{
+                setLoaded(true)
             }
-        })
-        .catch(function (error) {
-            // handle error
-            console.log(error);
-        })
-        .then(function () {
-            // always executed
-        });
-    })
-
-    useEffect(()=>{
-        if(status!==WalletStatus.WALLET_CONNECTED){
-            setAmount(null)
+            setAmount(balancePrice[tokenInfo.token].balance)
+            setPrice(balancePrice[tokenInfo.token].price)
         }
-    }, [status])
 
+    }, [balancePrice])
 
     return (
             <div className='balance-container'>
