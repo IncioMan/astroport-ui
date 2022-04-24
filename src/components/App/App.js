@@ -173,8 +173,8 @@ function App() {
             <SwapSuggestionsContainer suggestions={suggestions}/>
             <ProfileContainer tokens={[{name:'uluna', native:true},
                                        {name:'uusd', native:true},
-                                       {name:'terra1hj8de24c3yqvcsv9r8chr03fzwsak3hgd8gv3m', native:false},
-                                       {name:'terra1xfsdgcemqwxp4hhnyk4rle6wr22sseq7j07dnn', native:false},
+                                       {name:'terra1kc87mu460fwkqte29rquh4hc20m54fxwtsx7gp', native:false},
+                                       {name:'terra1xj49zyqrwpv5k928jwfpfy2ha668nwdgkwlrg3', native:false},
                                        {name:'terra12hgwnpupflfpuual532wgrxu2gjp0tcagzgx4n', native:false}]}/>
             <div className='asset-selection-container-outer'>
                 <div className='asset-selection-container-inner'>
@@ -199,7 +199,7 @@ function App() {
           modal={true}
           height={224}>
           <button className='close-dialog-button' onClick={()=>handleClose()}>&#10005;</button>
-          <div style={{paddingTop: "10px"}}>
+          <div>
             <p>This feature will come soon.</p>
             <p> This version of the app is just a proof of concept.</p>
             <p>In the meantime, let me know what you think of it.</p>
