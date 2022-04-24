@@ -12,7 +12,6 @@ import ReactDOM from 'react-dom';
 import BalancePriceContext from '../BalancePriceContext/BalancePriceContext';
 const axios = require('axios').default;
 import tokens from '../../data/tokens.js'
-import SwapMetrics from '../SwapMetrics/SwapMetrics'
 
 const suggestions = [
     {title:'MOST POPULAR',
@@ -178,7 +177,6 @@ function App() {
                 <div className='asset-selection-container-inner'>
                     <PairDropdown/>
                     <SwapContainer/>
-                    <SwapMetrics/>
                     {status !== WalletStatus.WALLET_CONNECTED && (
                       <button ref={swapRef} tabIndex="4" 
                       className='swap-button' type="button"
