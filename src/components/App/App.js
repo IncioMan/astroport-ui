@@ -157,13 +157,13 @@ function App() {
 
   const {
     status,
+    availableConnectTypes,
     connect,
   } = useWallet();
 
   const openDialog = () => setDialogOpen(true)
  
   const handleClose = () => setDialogOpen(false)
-
 
   return (
     <div className='App'>
@@ -183,7 +183,13 @@ function App() {
                     {status !== WalletStatus.WALLET_CONNECTED && (
                       <button ref={swapRef} tabIndex="4" 
                       className='swap-button' type="button"
-                      onClick={() => connect('EXTENSION')}
+                      onClick={() => {
+                        if(availableConnectTypes.includes('EXTENSION')){
+                            connect('EXTENSION')
+                        }else{
+                            setDialogOpen(true)
+                        }
+                      }}
                       >Connect Wallet</button>)}
                     {status === WalletStatus.WALLET_CONNECTED && (
                       <button ref={swapRef} tabIndex="4" 
@@ -198,13 +204,13 @@ function App() {
       <Dialog
           modal={true}
           height={224}>
-          <button className='close-dialog-button' onClick={()=>handleClose()}>&#10005;</button>
+          <button className='close-dialog-button'autoFocus={true} onClick={()=>handleClose()}>&#10005;</button>
           <div>
             <p>This feature will come soon.</p>
             <p> This version of the app is just a proof of concept.</p>
             <p>In the meantime, let me know what you think of it.</p>
             <p>You can also follow me for future developments.</p>
-            <a target="_blank" href={'https://twitter.com/IncioMan/status/1516497140608118788?s=20&t=oJZyB_DCAW0Z8KVzHhEN1A'}>
+            <a target="_blank" href={'https://twitter.com/IncioMan/status/1518587159342575616?s=20&t=j1h23slr6Pli3pi32DU92Q'}>
             <img src="https://raw.githubusercontent.com/IncioMan/mars_lockdrop/master//images/twitter.png"
                 className='twitter-logo'
                 width={50}/>
