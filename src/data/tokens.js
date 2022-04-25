@@ -668,6 +668,25 @@ module.exports = {
     },
   },
   testnet: {
+    uusd: {
+      protocol: "Native",
+      symbol: "UST",
+      token: "uusd",
+      icon: 'https://assets.terra.money/icon/60/UST.png'
+    },
+    uluna: {
+        protocol: "Native",
+        symbol: "LUNA",
+        token: "uluna",
+        icon: 'https://assets.terra.money/icon/60/Luna.png'
+    },
+    terra1jqcw39c42mf7ngq4drgggakk3ymljgd3r5c3r5:{
+      protocol: "Astroport",
+      symbol: "ASTRO",
+      name: "Astroport Token",
+      token: "terra1jqcw39c42mf7ngq4drgggakk3ymljgd3r5c3r5",
+      icon: "https://astroport.fi/astro_logo.png",
+    },
     terra1v000amr8a59r88p33ec2kk9xqe047g7zzqqaf4: {
       protocol: "LoTerra",
       symbol: "LOTA",
