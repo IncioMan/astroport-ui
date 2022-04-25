@@ -16,3 +16,6 @@ npm start
         "max_spread":"0.005","belief_price":"90"
   }
 }
+
+- suggestionlists deve usare network due liste diverse in base alla network
+- tx swap in testnet
