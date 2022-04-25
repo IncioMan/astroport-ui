@@ -81,10 +81,7 @@ function App() {
   },[swapValue])
 
   useEffect(() => {
-    const tokensToFetch = [swapValue.assetFrom.asset, swapValue.assetTo.asset,
-        'terra1hj8de24c3yqvcsv9r8chr03fzwsak3hgd8gv3m',
-        'terra1xfsdgcemqwxp4hhnyk4rle6wr22sseq7j07dnn',
-        'terra12hgwnpupflfpuual532wgrxu2gjp0tcagzgx4n']
+    const tokensToFetch = [swapValue.assetFrom.asset, swapValue.assetTo.asset]
     for (let token of tokensToFetch) {
         if(!connectedWallet){
             const value = {}
@@ -92,7 +89,7 @@ function App() {
             setBalancePrice(value)
             continue
         }
-        const tokenInfo = tokens.mainnet[token]
+        const tokenInfo = tokens[network.name][token]
         const value = {}
         value[token] = {price:'loading', balance:'loading'}
         setBalancePrice(value)
@@ -157,12 +154,21 @@ function App() {
 
   const {
     status,
+    network,
     availableConnectTypes,
     connect,
   } = useWallet();
 
+  useEffect(()=>{
+    if(network&&network.name=='testnet'){setSwapValue({
+        pool: 'terra1ec0fnjk2u6mms05xyyrte44jfdgdaqnx0upesr'
+    })}
+    else{setSwapValue({
+        pool: 'terra1m6ywlgn6wrjuagcmmezzz2a029gtldhey5k552'
+    })}
+  },[network])
+
   const openDialog = () => setDialogOpen(true)
- 
   const handleClose = () => setDialogOpen(false)
 
   return (
@@ -172,10 +178,7 @@ function App() {
         <div className='App-header'>
             <SwapSuggestionsContainer suggestions={suggestions}/>
             <ProfileContainer tokens={[{name:'uluna', native:true},
-                                       {name:'uusd', native:true},
-                                       {name:'terra1kc87mu460fwkqte29rquh4hc20m54fxwtsx7gp', native:false},
-                                       {name:'terra1xj49zyqrwpv5k928jwfpfy2ha668nwdgkwlrg3', native:false},
-                                       {name:'terra12hgwnpupflfpuual532wgrxu2gjp0tcagzgx4n', native:false}]}/>
+                                       {name:'uusd', native:true}]}/>
             <div className='asset-selection-container-outer'>
                 <div className='asset-selection-container-inner'>
                     <PairDropdown/>

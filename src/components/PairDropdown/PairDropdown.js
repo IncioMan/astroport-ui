@@ -1,51 +1,50 @@
-import React, { Component } from 'react';
+import React, { useRef, useState  } from 'react';
 import PairDropdownItem from '../PairDropdownItem/PairDropdownItem'
 import './PairDropdown.css'
 import SwapContext from '../SwapContainer/SwapContext';
 import pools from '../../data/astroport.dex.js'
 import tokens from '../../data/tokens.js'
-export default class PairDropdown extends Component {
-    constructor(props) {
-        super(props)
-        this.availablePairs = Object.keys(pools.mainnet).map((pool)=>({
-            pool: pool,
-            from: tokens.mainnet[pools.mainnet[pool].assets[0]],
-            to: tokens.mainnet[pools.mainnet[pool].assets[1]],
-            focused:false}))
-        this.availablePairs = this.availablePairs.concat(Object.keys(pools.mainnet).map((pool)=>({
-            pool: pool,
-            from: tokens.mainnet[pools.mainnet[pool].assets[1]],
-            to: tokens.mainnet[pools.mainnet[pool].assets[0]],
-            focused:false})))
-        this.state = {
-          isListOpen: false,
-          suggestionsShown: this.availablePairs,
-          inputText: null,
-          focusedOption: -1
-        }
-        this.inputRef = React.createRef();
-    }
+import {useConnectedWallet, useLCDClient, useWallet, WalletStatus } from '@terra-money/wallet-provider';
 
-    processInput = (text) => {
+export default function PairDropdown() {
+    const {
+        network
+      } = useWallet();
+
+    const tmpPairs = Object.keys(pools[network.name])?.map((pool)=>({
+        pool: pool,
+        from: tokens[network.name][pools[network.name][pool].assets[0]],
+        to: tokens[network.name][pools[network.name][pool].assets[1]],
+        focused:false}))
+    const availablePairs = tmpPairs.concat(Object.keys(pools[network.name]).map((pool)=>({
+        pool: pool,
+        from: tokens[network.name][pools[network.name][pool].assets[1]],
+        to: tokens[network.name][pools[network.name][pool].assets[0]],
+        focused:false})))
+    const [isListOpen, setListOpen] = useState(false)
+    const [suggestionsShown, setSuggestionsShown] = useState(availablePairs)
+    const [inputText, setInputText] = useState(null)
+    const [focusedOption, setFocusedOption] = useState(-1)
+    let inputRef = useRef();
+
+    const processInput = (text) => {
         const textCleaned = text.replace(' ','')
                                 .replace('->','')
-        this.setState(prevState => ({
-          isListOpen: text.length>0,
-          suggestionsShown : this.availablePairs.filter(pair => {
-              var filteredStrings = {search: textCleaned.toUpperCase(), select: (pair.from.symbol + pair.to.symbol).toUpperCase()}
-              for(let c of filteredStrings.search) 
+        setListOpen(text.length>0)
+        setInputText(text)
+        setSuggestionsShown(availablePairs.filter(
+            pair => {
+                var filteredStrings = {search: textCleaned.toUpperCase(), select: (pair.from.symbol + pair.to.symbol).toUpperCase()}
+                for(let c of filteredStrings.search) 
                 if(!filteredStrings.select.includes(c)){
                     return false;
                 }
             return true
-          }),
-          inputText: text
-       }))
+            }))
     }
 
-    arrowHandler = (index, change) => {
-        this.setState(prevState => {
-            var newSuggestionsShown = [...prevState.suggestionsShown]
+    const arrowHandler = (index, change) => {
+            var newSuggestionsShown = [...suggestionsShown]
             var newFocusedOption = index
             if(index+change < newSuggestionsShown.length){
                 newFocusedOption = index + change
@@ -58,111 +57,97 @@ export default class PairDropdown extends Component {
             }
             if(newFocusedOption<0){
                 newSuggestionsShown.forEach((s)=> s.focused = false);
-                this.inputRef.current.focus()
+                inputRef.current.focus()
             }
-            return {
-                focusedOption: newFocusedOption,
-                suggestionsShown: newSuggestionsShown
-            }
-        })
+            setFocusedOption(newFocusedOption)
+            setSuggestionsShown(newSuggestionsShown)
     }
 
-    resetFocusOptions = () => {
-        this.setState(prevState => {
-            var newSuggestionsShown = [...prevState.suggestionsShown]
+    const resetFocusOptions = () => {
+            var newSuggestionsShown = [...suggestionsShown]
             newSuggestionsShown.forEach((s)=> s.focused = false);
-            return {
-                focusedOption: -1,
-                suggestionsShown: newSuggestionsShown
-            }
-        })
+            setFocusedOption(-1)
+            setSuggestionsShown(newSuggestionsShown)
     }
 
-    closeWindow = () => {
-        this.setState(prevState => {
-          var newSuggestionsShown = [...prevState.suggestionsShown]
+    const closeWindow = () => {
+          var newSuggestionsShown = [...suggestionsShown]
           newSuggestionsShown.forEach((s)=> s.focused = false);
-        return {
-          isListOpen: false,
-          inputText: '',
-          focusedOption: -1,
-          suggestionsShown: newSuggestionsShown
-       }})
+          setListOpen(false)
+          setInputText('')
+          setFocusedOption(-1)
+          setSuggestionsShown(newSuggestionsShown)
     }
     
-    escapeWindow = () => {
-        this.closeWindow()
-        this.inputRef.current.focus()
+    const escapeWindow = () => {
+        closeWindow()
+        inputRef.current.focus()
     }
 
-    render() {
-        const { isListOpen, suggestionsShown, inputText} = this.state;
-        return (
-          <div className="dd-wrapper">
-            <input  tabIndex="1" placeholder="Swap Pair" type="text" ref={this.inputRef}
-                    value={inputText} 
-                    onChange={(e)=>{
-                        this.processInput(e.target.value)
-                        if(e.target.value===''){this.closeWindow()}
-                    }}
-                    onFocus={()=>this.resetFocusOptions()}
-                    autoFocus
-                    onKeyDown = {(e) =>{
-                        if (e.key === 'ArrowDown') {
-                            this.arrowHandler(-1,1)
-                    }}}/>
-            {isListOpen && (
-                <SwapContext.Consumer>
-                {({swapValue, setSwapValue}) => (
-                    <div className='dropdown-list-container' role="list"
-                    >
-                        {isListOpen && suggestionsShown.map((pair, index) => (
-                        <div className="dd-list-item">
-                            <PairDropdownItem 
-                                    asset1={pair.from.symbol}
-                                    logo1={pair.from.icon}
-                                    asset2={pair.to.symbol}
-                                    logo2={pair.to.icon}
-                                    focused={pair.focused}
-                                    onClick={() => {
+    return (
+        <div className="dd-wrapper">
+        <input  tabIndex="1" placeholder="Swap Pair" type="text" ref={inputRef}
+                value={inputText} 
+                onChange={(e)=>{
+                    processInput(e.target.value)
+                    if(e.target.value===''){closeWindow()}
+                }}
+                onFocus={()=>resetFocusOptions()}
+                autoFocus
+                onKeyDown = {(e) =>{
+                    if (e.key === 'ArrowDown') {
+                        arrowHandler(-1,1)
+                }}}/>
+        {isListOpen && (
+            <SwapContext.Consumer>
+            {({swapValue, setSwapValue}) => (
+                <div className='dropdown-list-container' role="list"
+                >
+                    {isListOpen && suggestionsShown.map((pair, index) => (
+                    <div className="dd-list-item">
+                        <PairDropdownItem 
+                                asset1={pair.from.symbol}
+                                logo1={pair.from.icon}
+                                asset2={pair.to.symbol}
+                                logo2={pair.to.icon}
+                                focused={pair.focused}
+                                onClick={() => {
+                                    setSwapValue({
+                                        assetFrom: pair.from.token,
+                                        assetTo: pair.to.asset,
+                                        pool: pair.pool,
+                                        step: 'amount'
+                                    })
+                                    closeWindow();
+                                }}
+                                onKeyUp = {(e) =>{
+                                    if (e.key === 'Enter') {
                                         setSwapValue({
                                             assetFrom: pair.from.token,
-                                            assetTo: pair.to.asset,
+                                            assetTo: pair.to.token,
                                             pool: pair.pool,
                                             step: 'amount'
                                         })
-                                        this.closeWindow();
-                                    }}
-                                    onKeyUp = {(e) =>{
-                                        if (e.key === 'Enter') {
-                                            setSwapValue({
-                                                assetFrom: pair.from.token,
-                                                assetTo: pair.to.token,
-                                                pool: pair.pool,
-                                                step: 'amount'
-                                            })
-                                            this.closeWindow();
-                                        }
-                                        if (e.key === 'Escape') {
-                                            this.escapeWindow();
-                                        }
-                                    }}
-                                    onKeyDown = {(e)=>{
-                                        if (e.key === 'ArrowDown') {
-                                            this.arrowHandler(index, 1)
-                                        }
-                                        if (e.key === 'ArrowUp') {
-                                            this.arrowHandler(index, -1)
-                                        }
-                                    }}
-                            ></PairDropdownItem>
-                            </div>
-                        ))}
-                    </div>
-                )}
-                </SwapContext.Consumer>
+                                        closeWindow();
+                                    }
+                                    if (e.key === 'Escape') {
+                                        escapeWindow();
+                                    }
+                                }}
+                                onKeyDown = {(e)=>{
+                                    if (e.key === 'ArrowDown') {
+                                        arrowHandler(index, 1)
+                                    }
+                                    if (e.key === 'ArrowUp') {
+                                        arrowHandler(index, -1)
+                                    }
+                                }}
+                        ></PairDropdownItem>
+                        </div>
+                    ))}
+                </div>
             )}
-          </div>
-        )
-      }
+            </SwapContext.Consumer>
+        )}
+        </div>)
 }
