@@ -161,9 +161,13 @@ function App() {
 
   useEffect(()=>{
     if(network&&network.name=='testnet'){setSwapValue({
+        assetFrom: 'terra1jqcw39c42mf7ngq4drgggakk3ymljgd3r5c3r5',
+        assetTo:'uusd',
         pool: 'terra1ec0fnjk2u6mms05xyyrte44jfdgdaqnx0upesr'
     })}
     else{setSwapValue({
+        assetFrom:'uusd',
+        assetTo:'uluna',
         pool: 'terra1m6ywlgn6wrjuagcmmezzz2a029gtldhey5k552'
     })}
   },[network])

@@ -1,10 +1,5 @@
 module.exports = {
     testnet: {
-        terra1dqjpcqej9nxej80u0p56rhkrzlr6w8tp7txkmj: {
-            dex: "astroport",
-            type: "xyk",
-            assets: ["uluna", "uusd"],
-        },
         terra1ec0fnjk2u6mms05xyyrte44jfdgdaqnx0upesr:{
             dex: "astroport",
             type: "xyk",
