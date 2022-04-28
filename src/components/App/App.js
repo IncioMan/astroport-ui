@@ -75,12 +75,20 @@ function setBalancePriceReducer(state, value) {
   return newState
 }
 
+function setNotificationsReducer(state, value) {
+  if(!value){
+      return state
+  }
+  const newState = [...value]
+  return newState
+}
+
 
 function App() {
   const [balancePrice, setBalancePrice] = useReducer(setBalancePriceReducer, {});
   const [swapValue, setSwapValue] = useReducer(swapValueReducer, swapValueInit);
   const [isDialogOpen, setDialogOpen] = useState(false);
-  const [notifications, setNotifications] = useState([{txHash:1},{txHash:2},{txHash:2},{txHash:1}]);
+  const [notifications, setNotifications] = useReducer(setNotificationsReducer,[]);
   const swapRef = useRef();
   const lcd = useLCDClient();
   const connectedWallet = useConnectedWallet();
@@ -220,7 +228,7 @@ function App() {
                     "denom": "uusd"
                   }
                 },
-                "amount": swapValue.assetFrom.amount*1000000
+                "amount": (swapValue.assetFrom.amount*1000000).toString()
               },
               "belief_price": "123"
             }
@@ -243,7 +251,7 @@ function App() {
         return lcd.tx.broadcastSync(tx);
       })
       .then((nextTxResult) => {
-        console.log(nextTxResult);
+        setNotifications([...notifications,{txHash:nextTxResult.txhash}])
       })
       .catch((error) => {
         if (error instanceof UserDenied) {

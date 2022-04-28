@@ -1,6 +1,5 @@
 .notifications-container{
   overflow: auto;
-  position: absolute;
   max-height: 180px;
   margin-top: 10px;
   display: flex;

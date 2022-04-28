@@ -13,6 +13,12 @@
   border-color: #df4c73;
 }
 
+.loading-box{
+  color: #ffffff;
+  border-color: #ffffff;
+
+}
+
 .success-box{
   color: #7ee6a2;
   border-color: #7ee6a2;
@@ -26,6 +32,11 @@
 
 .close-notification-button:hover{
   cursor: pointer;
+}
+
+.msg-content{
+  justify-content: center;
+  display: flex;
 }
 
 .msg-box{
