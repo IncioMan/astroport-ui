@@ -130,7 +130,6 @@ export default function SwapContainer() {
                     }
                 }
             }
-            console.log(pool, query)
             lcd.wasm.contractQuery(pool,
                 query)
                 .then((res)=>{

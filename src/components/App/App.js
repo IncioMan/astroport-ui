@@ -6,12 +6,22 @@ import SwapContext from '../SwapContainer/SwapContext';
 import './App.css';
 import React, { useEffect, useReducer, useRef, useState } from 'react';
 import {useConnectedWallet, useLCDClient, useWallet, WalletStatus } from '@terra-money/wallet-provider';
-import { getChainOptions, WalletProvider } from '@terra-money/wallet-provider';
+import { getChainOptions, WalletProvider, } from '@terra-money/wallet-provider';
+import {createLCDClient,
+    CreateTxFailed,
+    SignResult,
+    Timeout,
+    TxFailed,
+    TxUnspecifiedError,
+    UserDenied} from '@terra-money/wallet-provider';
 import ReactDOM from 'react-dom';
 import BalancePriceContext from '../BalancePriceContext/BalancePriceContext';
+import NotificationsContainer from '../NotificationsContainer/NotificationsContainer';
 const axios = require('axios').default;
 import tokens from '../../data/tokens.js'
 import Dialog from 'react-dialog'
+import { MsgExecuteContract } from '@terra-money/terra.js';
+import pools from '../../data/astroport.dex.js'
 
 const suggestions = [
     {title:'MOST POPULAR',
@@ -70,6 +80,7 @@ function App() {
   const [balancePrice, setBalancePrice] = useReducer(setBalancePriceReducer, {});
   const [swapValue, setSwapValue] = useReducer(swapValueReducer, swapValueInit);
   const [isDialogOpen, setDialogOpen] = useState(false);
+  const [notifications, setNotifications] = useState([{txHash:1},{txHash:2},{txHash:2},{txHash:1}]);
   const swapRef = useRef();
   const lcd = useLCDClient();
   const connectedWallet = useConnectedWallet();
@@ -174,6 +185,85 @@ function App() {
 
   const openDialog = () => setDialogOpen(true)
   const handleClose = () => setDialogOpen(false)
+  const [signResult, setSignResult] = useState(null);
+  const [txResult, setTxResult] = useState(null);
+  const [txError, setTxError] = useState(null);
+  const tryTx = () => {
+    const pool = pools[network.name]?.[swapValue.pool]
+    if(!pool){
+      return
+    }
+    let execute = null;
+    if(pool.assets[0]==swapValue.assetFrom.asset){
+      execute = new MsgExecuteContract(
+        connectedWallet.terraAddress, // sender
+        swapValue.assetFrom.asset, // contract account address
+        {
+          "send": {
+            "msg":"eyJzd2FwIjp7Im1heF9zcHJlYWQiOiIwLjAwMTAwMCJ9fQ==",
+            "amount": (swapValue.assetFrom.amount*1000000).toString(),
+            "contract": swapValue.pool
+          }
+        }, { })
+    }
+    if(pool.assets[1]==swapValue.assetFrom.asset){
+      execute = new MsgExecuteContract(
+        connectedWallet.terraAddress, // sender
+        swapValue.pool, // contract account address
+        {
+            "swap": {
+              "to": connectedWallet.terraAddress,
+              "max_spread": "0",
+              "offer_asset": {
+                "info": {
+                  "native_token": {
+                    "denom": "uusd"
+                  }
+                },
+                "amount": swapValue.assetFrom.amount*1000000
+              },
+              "belief_price": "123"
+            }
+          }, // handle msg
+        { uusd: swapValue.assetFrom.amount*1000000 } // coins
+      )
+    }
+    
+      
+      connectedWallet.sign({
+        msgs: [execute]
+      }).then((nextSignResult) => {
+        setSignResult(nextSignResult);
+
+        // broadcast
+        const tx = nextSignResult.result;
+
+        const lcd = createLCDClient({ network: connectedWallet.network });
+
+        return lcd.tx.broadcastSync(tx);
+      })
+      .then((nextTxResult) => {
+        console.log(nextTxResult);
+      })
+      .catch((error) => {
+        if (error instanceof UserDenied) {
+          console.error('User Denied');
+        } else if (error instanceof CreateTxFailed) {
+          console.error('Create Tx Failed: ' + error.message);
+        } else if (error instanceof TxFailed) {
+          console.error('Tx Failed: ' + error.message);
+        } else if (error instanceof Timeout) {
+          console.error('Timeout');
+        } else if (error instanceof TxUnspecifiedError) {
+          console.error('Unspecified Error: ' + error.message);
+        } else {
+          console.error(
+            'Unknown Error: ' +
+              (error instanceof Error ? error.message : String(error)),
+          );
+        }
+      });
+  }
 
   return (
     <div className='App'>
@@ -201,7 +291,9 @@ function App() {
                     {status === WalletStatus.WALLET_CONNECTED && (
                       <button ref={swapRef} tabIndex="4" 
                       className='swap-button' type="button"
-                      onClick={() => setDialogOpen(true)}>SWAP</button>)}
+                      onClick={() => tryTx()}>SWAP</button>)}
+                    <NotificationsContainer notifications={notifications}
+                                            setNotifications={setNotifications}/>
                 </div>
             </div>
         </div>

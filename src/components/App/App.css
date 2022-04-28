@@ -75,7 +75,6 @@ overflow-y: auto;
   position: absolute;
     right: 24px;
     background: transparent;
-    color: white;
     font-size: 20px;
     border: none;
     top: 20px;
@@ -104,6 +103,8 @@ overflow-y: auto;
 
 .asset-selection-container-inner{
     max-width: 600px;
+    position: absolute;
+    top: 25%;
 }
 
 

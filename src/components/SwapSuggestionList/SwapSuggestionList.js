@@ -19,7 +19,13 @@ export default function SwapSuggestionList(props) {
 
     useEffect(()=>{
         if(network&&network.name=='testnet'){
-            setPairs(['terra1ec0fnjk2u6mms05xyyrte44jfdgdaqnx0upesr','terra13r3vngakfw457dwhw9ef36mc8w6agggefe70d9'])
+            setPairs(['terra1ec0fnjk2u6mms05xyyrte44jfdgdaqnx0upesr',
+                        'terra13r3vngakfw457dwhw9ef36mc8w6agggefe70d9',
+                        'terra1x23y2hxpxph6wueyqj5m5grlr23z5dt4wvpn0r',
+                        'terra1z7250szwg9khf20a72r2u7qv2l4ndghkhhp4ev',
+                        'terra1af47e4tl5gapkqr45vvxx7nygg5f9qkecjvpdm',
+                        'terra1esle9h9cjeavul53dqqws047fpwdhj6tynj5u4',
+                        'terra178na9upyad7gu4kulym9uamwafgrf922yln76l'])
         }
         else{
             axios.get(url)
