@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useReducer, useState } from 'react';
+import {React, useContext, useEffect, useReducer, useState } from 'react';
 import AssetToSwap from '../AssetToSwap/AssetToSwap'
 import SwapContext from './SwapContext';
 import tokens from '../../data/tokens.js'
@@ -12,6 +12,7 @@ export default function SwapContainer() {
     const [loaded, setLoaded] = useState(true); 
     const lcd = useLCDClient();
     const connectedWallet = useConnectedWallet();
+    const {network} = useWallet();
 
     function swapRatesReducer(state, value) {
         if(!value){
@@ -99,8 +100,7 @@ export default function SwapContainer() {
             lcd.wasm.contractQuery(pool,
                 query)
                 .then((res)=>{
-                    console.log(res.return_amount)
-                    setSwapRates({from:Math.round((res.return_amount/1000000)*100)/100})
+                    setSwapRates({from:Math.round((res.return_amount/1000000)*10000)/10000})
                 }).catch(function (error) {
                     console.log(error);
                 })
@@ -130,12 +130,10 @@ export default function SwapContainer() {
                     }
                 }
             }
-            console.log(pool, query)
             lcd.wasm.contractQuery(pool,
                 query)
                 .then((res)=>{
-                    console.log(res.return_amount)
-                    setSwapRates({to:Math.round((res.return_amount/1000000)*100)/100})
+                    setSwapRates({to:Math.round((res.return_amount/1000000)*10000)/10000})
                 }).catch(function (error) {
                     console.log(error);
                 })
@@ -145,34 +143,34 @@ export default function SwapContainer() {
     return (
         <>
         <div className='swap-container-input'>
-        <AssetToSwap token={swapValue.assetFrom.asset} asset={tokens.mainnet[swapValue.assetFrom.asset].symbol} logo={tokens.mainnet[swapValue.assetFrom.asset].icon}
-                    owned={true} amount={swapValue.assetFrom.amount} onChange={(e)=>setSwapValue({amount: e.target.value, step:'amount'})}></AssetToSwap>
-        <div className='arrow-container'>
-            <div className='arrow-button' tabIndex={5} 
-                onClick={()=>{
-                    setSwapValue({
-                        assetFrom: swapValue.assetTo.asset,
-                        assetTo:swapValue.assetFrom.asset,
-                        step: 'amount'
-                    })
-                }}
-                onKeyUp = {(e) =>{
-                    if (e.key === 'Enter') {
+            <AssetToSwap token={swapValue.assetFrom.asset} asset={tokens[network.name][swapValue.assetFrom.asset].symbol} logo={tokens[network.name][swapValue.assetFrom.asset].icon}
+                        owned={true} amount={swapValue.assetFrom.amount} onChange={(e)=>setSwapValue({amount: e.target.value, step:'amount'})}></AssetToSwap>
+            <div className='arrow-container'>
+                <div className='arrow-button' tabIndex={5} 
+                    onClick={()=>{
                         setSwapValue({
                             assetFrom: swapValue.assetTo.asset,
-                            assetTo: swapValue.assetFrom.asset,
+                            assetTo:swapValue.assetFrom.asset,
                             step: 'amount'
                         })
-                    }
-                }}>&rarr;</div>
-        </div>
-        <AssetToSwap token={swapValue.assetTo.asset} asset={tokens.mainnet[swapValue.assetTo.asset].symbol} logo={tokens.mainnet[swapValue.assetTo.asset].icon}
-                    owned={false} amount={Math.round(swapValue.assetFrom.amount*swapRates.from*100)/100}></AssetToSwap>
-        </div>
-        <SwapMetrics fromSymbol={tokens.mainnet[swapValue.assetFrom.asset].symbol} 
-                     toSymbol={tokens.mainnet[swapValue.assetTo.asset].symbol} 
-                     swapRateFrom={swapRates.from} swapRateTo={swapRates.to}
-                     priceAssetTo={prices.to} priceAssetFrom={prices.to} loaded={loaded} />
+                    }}
+                    onKeyUp = {(e) =>{
+                        if (e.key === 'Enter') {
+                            setSwapValue({
+                                assetFrom: swapValue.assetTo.asset,
+                                assetTo: swapValue.assetFrom.asset,
+                                step: 'amount'
+                            })
+                        }
+                    }}>&rarr;</div>
+            </div>
+            <AssetToSwap token={swapValue.assetTo.asset} asset={tokens[network.name][swapValue.assetTo.asset].symbol} logo={tokens[network.name][swapValue.assetTo.asset].icon}
+                        owned={false} amount={swapValue.assetFrom.amount*swapRates.from}></AssetToSwap>
+            </div>
+            <SwapMetrics fromSymbol={tokens[network.name][swapValue.assetFrom.asset].symbol} 
+                        toSymbol={tokens[network.name][swapValue.assetTo.asset].symbol} 
+                        swapRateFrom={swapRates.from} swapRateTo={swapRates.to}
+                        priceAssetTo={prices.to} priceAssetFrom={prices.from} loaded={loaded} />
         </>
     )
 }

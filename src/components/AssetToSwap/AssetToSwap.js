@@ -2,6 +2,7 @@ import React, { useEffect , useRef, useState, useContext} from 'react';
 import './AssetToSwap.css'
 import SwapContext from '../SwapContainer/SwapContext';
 import BalancePriceContext from '../BalancePriceContext/BalancePriceContext';
+import numeral from 'numeral';
 
 export default function AssetToSwap(props) {
     const { token, asset, logo, owned, amount, onChange} = props;
@@ -86,7 +87,7 @@ export default function AssetToSwap(props) {
                     {(!owned && 
                     <>
                         <img className='asset-logo-to' src={logo} width="40" alt="Italian Trulli"></img>
-                        <div className='amount-calculated'>{amount}</div>
+                        <div className='amount-calculated'>{numeral(amount).format('0.00')}</div>
                     </>)}   
                 </div>
             </div>

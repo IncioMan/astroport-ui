@@ -39,6 +39,7 @@
     "axios": "^0.26.1",
     "babel-runtime": "^6.26.0",
     "core-js": "^3.22.2",
+    "numeral": "^2.0.6",
     "react": "^17.0.2",
     "react-dialog": "^1.0.2",
     "react-dom": "^17.0.2",
