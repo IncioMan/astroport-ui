@@ -1,0 +1,8 @@
+.notifications-container{
+  overflow: auto;
+  max-height: 180px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-content: initial;
+}

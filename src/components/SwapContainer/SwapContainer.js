@@ -100,7 +100,7 @@ export default function SwapContainer() {
             lcd.wasm.contractQuery(pool,
                 query)
                 .then((res)=>{
-                    setSwapRates({from:Math.round((res.return_amount/1000000)*10000)/10000})
+                    setSwapRates({from:res.return_amount/1000000})
                 }).catch(function (error) {
                     console.log(error);
                 })
@@ -133,7 +133,7 @@ export default function SwapContainer() {
             lcd.wasm.contractQuery(pool,
                 query)
                 .then((res)=>{
-                    setSwapRates({to:Math.round((res.return_amount/1000000)*10000)/10000})
+                    setSwapRates({to:res.return_amount/1000000})
                 }).catch(function (error) {
                     console.log(error);
                 })
