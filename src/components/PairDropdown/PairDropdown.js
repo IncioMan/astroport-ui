@@ -114,7 +114,7 @@ export default function PairDropdown() {
                                 onClick={() => {
                                     setSwapValue({
                                         assetFrom: pair.from.token,
-                                        assetTo: pair.to.asset,
+                                        assetTo: pair.to.token,
                                         pool: pair.pool,
                                         step: 'amount'
                                     })
