@@ -10,6 +10,7 @@ export default function NotificationsContainer(props) {
             notifications.map((n) => (
                 <NotificationBox 
                 txHash={n.txHash}
+                errorMessage={n.errorMessage}
                 onClose={(txHash)=>{
                     console.log(0/0)
                     const ns = notifications.filter((n)=>{

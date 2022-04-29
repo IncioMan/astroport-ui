@@ -263,10 +263,12 @@ function App() {
           console.error('User Denied');
         } else if (error instanceof CreateTxFailed) {
           console.error('Create Tx Failed: ' + error.message);
-          setErrorMessage(error.message)
+          //setErrorMessage(error.message)
+          setNotifications([...notifications,{errorMessage:error.message}])
         } else if (error instanceof TxFailed) {
           console.error('Tx Failed: ' + error.message);
-          setErrorMessage(error.message)
+          setNotifications([...notifications,{errorMessage:error.message}])
+          //setErrorMessage(error.message)
         } else if (error instanceof Timeout) {
           console.error('Timeout');
         } else if (error instanceof TxUnspecifiedError) {

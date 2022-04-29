@@ -6,7 +6,7 @@ import './NotificationBox.css'
 import tokens from '../../data/tokens.js'
 
 export default function NotificationBox(props) {
-    const {txHash, onClose} = props
+    const {txHash, errorMessage, onClose} = props
     const [txVerifed, setTxVerifed] = useState(false)
     const [content, setContent] = useState('')
     const lcd = useLCDClient();
@@ -34,13 +34,16 @@ export default function NotificationBox(props) {
             })}
 
     useEffect(()=>{
+        if(errorMessage){
+            return
+        }
         setTxVerifed(false)
         fetchTxInfo()
     },[txHash])
 
     return (
         <>
-        {(!txVerifed)&&
+        {(!txVerifed)&&(!errorMessage)&&
             (<div className='msg-box loading-box loading' >
                 <a target="_blank" href={'https://terrasco.pe/'+network.name+'/tx/'+txHash}>
                     <div className='type-msg loading'>
@@ -54,29 +57,29 @@ export default function NotificationBox(props) {
             </div>)
         }
         {
-        (txVerifed) &&
+        (txVerifed)&&(!errorMessage)&&
             (<div className='msg-box success-box success'>
+                <div className='type-msg success'>
+                Success:
+                </div>
                 <a target="_blank" href={'https://terrasco.pe/'+network.name+'/tx/'+txHash}>
-                    <div className='type-msg success'>
-                    Success:
+                    <div className='msg-content link-success success'>
+                    {content}
                     </div>
                 </a>
-                <div className='msg-content'>
-                 {content}
-                </div>
                 <button className='close-notification-button success success-box' onClick={()=>onClose(txHash)}>&#10005;</button>
             </div>)
         }
         {
-            (txVerifed)&&(txHash==2)&&
+            (errorMessage)&&
             (<div className='msg-box error-box error'  onClick={()=>onClose(txHash)}>
-                <div className='type-msg'>
-                Warning:
+                <div className='type-msg error'>
+                    Error:
                 </div>
-                <div className='msg-content'>
-                Provided spread amount exceeds allowed limit
+                 <div className='msg-content link-error error'>
+                    {errorMessage}
                 </div>
-                <button className='close-notification-button error-box' onClick={()=>onClose(txHash)}>&#10005;</button>
+                <button className='close-notification-button error error-box' onClick={()=>onClose(txHash)}>&#10005;</button>
             </div>)
         }
         </>

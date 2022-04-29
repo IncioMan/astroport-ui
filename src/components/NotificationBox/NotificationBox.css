@@ -1,6 +1,6 @@
 
 .type-msg{
-  width: 25%;
+  width: 20%;
   font-weight: bold;
 }
 
@@ -10,6 +10,11 @@
 
 .error-box{
   border-color: #df4c73;
+}
+
+.link-error{
+  text-decoration: underline;
+  color: #df4c73;
 }
 
 .error{
@@ -24,7 +29,7 @@
   color: #ffffff;
 }
 
-a .loading{
+.link-loading{
   text-decoration: underline;
   color: #ffffff;
 }
@@ -37,7 +42,7 @@ a .loading{
   color: #7ee6a2;
 }
 
-a .success{
+.link-success{
   text-decoration: underline;
   color: #7ee6a2;
 }
@@ -55,6 +60,7 @@ a .success{
 .msg-content{
   justify-content: center;
   display: flex;
+  width: 100%;
 }
 
 .msg-box{
@@ -65,6 +71,6 @@ a .success{
   margin: 3px;
   border-radius: 15px;
   border: solid 0.3px;
-  padding: 16px;
-  justify-content: center;
+  padding: 15px 20px;
+  justify-content: space-around;
 }
