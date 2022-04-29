@@ -72,11 +72,11 @@ export default function NotificationBox(props) {
         }
         {
             (errorMessage)&&
-            (<div className='msg-box error-box error'  onClick={()=>onClose(txHash)}>
+            (<div className='msg-box error-box error'>
                 <div className='type-msg error'>
                     Error:
                 </div>
-                 <div className='msg-content link-error error'>
+                 <div className='msg-content error'>
                     {errorMessage}
                 </div>
                 <button className='close-notification-button error error-box' onClick={()=>onClose(txHash)}>&#10005;</button>

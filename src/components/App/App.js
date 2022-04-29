@@ -200,6 +200,10 @@ function App() {
   const [txResult, setTxResult] = useState(null);
   const [txError, setTxError] = useState(null);
   const tryTx = () => {
+    if(network.name!=='testnet'){
+        setNotifications([...notifications,{errorMessage:"Swaps on mainnet are disabled. Please switch to testnet."}])
+        return;
+    }
     const pool = pools[network.name]?.[swapValue.pool]
     if(!pool){
       return
