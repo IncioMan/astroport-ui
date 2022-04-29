@@ -40,6 +40,7 @@ const swapValueInit = {
 
 
 function swapValueReducer(state, value) {
+    console.log(value)
     var assetFrom =  value.assetFrom
     var assetTo = value.assetTo
     var amount =  value.amount
@@ -88,6 +89,7 @@ function App() {
   const [balancePrice, setBalancePrice] = useReducer(setBalancePriceReducer, {});
   const [swapValue, setSwapValue] = useReducer(swapValueReducer, swapValueInit);
   const [isDialogOpen, setDialogOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
   const [notifications, setNotifications] = useReducer(setNotificationsReducer,[]);
   const swapRef = useRef();
   const lcd = useLCDClient();
@@ -97,6 +99,7 @@ function App() {
     if(swapValue.step === 'swap'){
         swapRef.current.focus()
     }
+    setErrorMessage(null)
   },[swapValue])
 
   useEffect(() => {
@@ -208,7 +211,7 @@ function App() {
         swapValue.assetFrom.asset, // contract account address
         {
           "send": {
-            "msg":"eyJzd2FwIjp7Im1heF9zcHJlYWQiOiIwLjAwMTAwMCJ9fQ==",
+            "msg":"eyJzd2FwIjp7Im1heF9zcHJlYWQiOiIwLjAxIn19",
             "amount": (swapValue.assetFrom.amount*1000000).toString(),
             "contract": swapValue.pool
           }
@@ -258,12 +261,15 @@ function App() {
           console.error('User Denied');
         } else if (error instanceof CreateTxFailed) {
           console.error('Create Tx Failed: ' + error.message);
+          setErrorMessage(error.message)
         } else if (error instanceof TxFailed) {
           console.error('Tx Failed: ' + error.message);
+          setErrorMessage(error.message)
         } else if (error instanceof Timeout) {
           console.error('Timeout');
         } else if (error instanceof TxUnspecifiedError) {
           console.error('Unspecified Error: ' + error.message);
+          setErrorMessage(error.message)
         } else {
           console.error(
             'Unknown Error: ' +
@@ -300,6 +306,9 @@ function App() {
                       <button ref={swapRef} tabIndex="4" 
                       className='swap-button' type="button"
                       onClick={() => tryTx()}>SWAP</button>)}
+                    <div className='error-message-container'>
+                      <div className='error-message'>{errorMessage}</div>
+                    </div>
                     <NotificationsContainer notifications={notifications}
                                             setNotifications={setNotifications}/>
                 </div>

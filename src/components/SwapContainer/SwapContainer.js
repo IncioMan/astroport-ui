@@ -100,7 +100,7 @@ export default function SwapContainer() {
             lcd.wasm.contractQuery(pool,
                 query)
                 .then((res)=>{
-                    setSwapRates({from:Math.round((res.return_amount/1000000)*100)/100})
+                    setSwapRates({from:res.return_amount/1000000})
                 }).catch(function (error) {
                     console.log(error);
                 })
@@ -133,7 +133,7 @@ export default function SwapContainer() {
             lcd.wasm.contractQuery(pool,
                 query)
                 .then((res)=>{
-                    setSwapRates({to:Math.round((res.return_amount/1000000)*100)/100})
+                    setSwapRates({to:res.return_amount/1000000})
                 }).catch(function (error) {
                     console.log(error);
                 })
@@ -165,12 +165,12 @@ export default function SwapContainer() {
                     }}>&rarr;</div>
             </div>
             <AssetToSwap token={swapValue.assetTo.asset} asset={tokens[network.name][swapValue.assetTo.asset].symbol} logo={tokens[network.name][swapValue.assetTo.asset].icon}
-                        owned={false} amount={Math.round(swapValue.assetFrom.amount*swapRates.from*100)/100}></AssetToSwap>
+                        owned={false} amount={swapValue.assetFrom.amount*swapRates.from}></AssetToSwap>
             </div>
             <SwapMetrics fromSymbol={tokens[network.name][swapValue.assetFrom.asset].symbol} 
                         toSymbol={tokens[network.name][swapValue.assetTo.asset].symbol} 
                         swapRateFrom={swapRates.from} swapRateTo={swapRates.to}
-                        priceAssetTo={prices.to} priceAssetFrom={prices.to} loaded={loaded} />
+                        priceAssetTo={prices.to} priceAssetFrom={prices.from} loaded={loaded} />
         </>
     )
 }

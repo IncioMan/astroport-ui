@@ -11,8 +11,13 @@ export default function NotificationsContainer(props) {
                 <NotificationBox 
                 txHash={n.txHash}
                 onClose={(txHash)=>{
-                    console.log(txHash)
-                    setNotifications(notifications.filter(n=>n.txHash!==txHash))
+                    console.log(0/0)
+                    const ns = notifications.filter((n)=>{
+                        console.log(n.txHash, txHash, n.txHash!==txHash)
+                        return n.txHash!==txHash
+                    })
+                    console.log(ns)
+                    setNotifications(ns)
                 }}
                 />
             ))

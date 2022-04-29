@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import {React, useEffect, useState } from 'react';
 import { TailSpin } from  'react-loader-spinner'
 import { TxAPI } from '@terra-money/terra.js';
 import { useLCDClient, useWallet } from '@terra-money/wallet-provider';
@@ -30,10 +30,13 @@ export default function NotificationBox(props) {
                             " for "+amountReturned+" "+assetRequested)
             }).catch(function (error) {
                 console.log("retrying", error)
-                new Promise(r => setTimeout(fetchTxInfo, 10000))
+                new Promise(r => setTimeout(fetchTxInfo, 3000))
             })}
 
-    fetchTxInfo()
+    useEffect(()=>{
+        setTxVerifed(false)
+        fetchTxInfo()
+    },[txHash])
 
     return (
         <>
