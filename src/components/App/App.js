@@ -6,12 +6,22 @@ import SwapContext from '../SwapContainer/SwapContext';
 import './App.css';
 import React, { useEffect, useReducer, useRef, useState } from 'react';
 import {useConnectedWallet, useLCDClient, useWallet, WalletStatus } from '@terra-money/wallet-provider';
-import { getChainOptions, WalletProvider } from '@terra-money/wallet-provider';
+import { getChainOptions, WalletProvider, } from '@terra-money/wallet-provider';
+import {createLCDClient,
+    CreateTxFailed,
+    SignResult,
+    Timeout,
+    TxFailed,
+    TxUnspecifiedError,
+    UserDenied} from '@terra-money/wallet-provider';
 import ReactDOM from 'react-dom';
 import BalancePriceContext from '../BalancePriceContext/BalancePriceContext';
+import NotificationsContainer from '../NotificationsContainer/NotificationsContainer';
 const axios = require('axios').default;
 import tokens from '../../data/tokens.js'
 import Dialog from 'react-dialog'
+import { MsgExecuteContract } from '@terra-money/terra.js';
+import pools from '../../data/astroport.dex.js'
 
 const suggestions = [
     {title:'MOST POPULAR',
@@ -30,6 +40,7 @@ const swapValueInit = {
 
 
 function swapValueReducer(state, value) {
+    console.log(value)
     var assetFrom =  value.assetFrom
     var assetTo = value.assetTo
     var amount =  value.amount
@@ -65,11 +76,21 @@ function setBalancePriceReducer(state, value) {
   return newState
 }
 
+function setNotificationsReducer(state, value) {
+  if(!value){
+      return state
+  }
+  const newState = [...value]
+  return newState
+}
+
 
 function App() {
   const [balancePrice, setBalancePrice] = useReducer(setBalancePriceReducer, {});
   const [swapValue, setSwapValue] = useReducer(swapValueReducer, swapValueInit);
   const [isDialogOpen, setDialogOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [notifications, setNotifications] = useReducer(setNotificationsReducer,[]);
   const swapRef = useRef();
   const lcd = useLCDClient();
   const connectedWallet = useConnectedWallet();
@@ -78,13 +99,11 @@ function App() {
     if(swapValue.step === 'swap'){
         swapRef.current.focus()
     }
+    setErrorMessage(null)
   },[swapValue])
 
   useEffect(() => {
-    const tokensToFetch = [swapValue.assetFrom.asset, swapValue.assetTo.asset,
-        'terra1hj8de24c3yqvcsv9r8chr03fzwsak3hgd8gv3m',
-        'terra1xfsdgcemqwxp4hhnyk4rle6wr22sseq7j07dnn',
-        'terra12hgwnpupflfpuual532wgrxu2gjp0tcagzgx4n']
+    const tokensToFetch = [swapValue.assetFrom.asset, swapValue.assetTo.asset]
     for (let token of tokensToFetch) {
         if(!connectedWallet){
             const value = {}
@@ -92,7 +111,7 @@ function App() {
             setBalancePrice(value)
             continue
         }
-        const tokenInfo = tokens.mainnet[token]
+        const tokenInfo = tokens[network.name][token]
         const value = {}
         value[token] = {price:'loading', balance:'loading'}
         setBalancePrice(value)
@@ -157,13 +176,108 @@ function App() {
 
   const {
     status,
+    network,
     availableConnectTypes,
     connect,
   } = useWallet();
 
+  useEffect(()=>{
+    if(network&&network.name=='testnet'){setSwapValue({
+        assetFrom: 'terra1jqcw39c42mf7ngq4drgggakk3ymljgd3r5c3r5',
+        assetTo:'uusd',
+        pool: 'terra1ec0fnjk2u6mms05xyyrte44jfdgdaqnx0upesr'
+    })}
+    else{setSwapValue({
+        assetFrom:'uusd',
+        assetTo:'uluna',
+        pool: 'terra1m6ywlgn6wrjuagcmmezzz2a029gtldhey5k552'
+    })}
+  },[network])
+
   const openDialog = () => setDialogOpen(true)
- 
   const handleClose = () => setDialogOpen(false)
+  const [signResult, setSignResult] = useState(null);
+  const [txResult, setTxResult] = useState(null);
+  const [txError, setTxError] = useState(null);
+  const tryTx = () => {
+    const pool = pools[network.name]?.[swapValue.pool]
+    if(!pool){
+      return
+    }
+    let execute = null;
+    if(pool.assets[0]==swapValue.assetFrom.asset){
+      execute = new MsgExecuteContract(
+        connectedWallet.terraAddress, // sender
+        swapValue.assetFrom.asset, // contract account address
+        {
+          "send": {
+            "msg":"eyJzd2FwIjp7Im1heF9zcHJlYWQiOiIwLjAxIn19",
+            "amount": (swapValue.assetFrom.amount*1000000).toString(),
+            "contract": swapValue.pool
+          }
+        }, { })
+    }
+    if(pool.assets[1]==swapValue.assetFrom.asset){
+      execute = new MsgExecuteContract(
+        connectedWallet.terraAddress, // sender
+        swapValue.pool, // contract account address
+        {
+            "swap": {
+              "to": connectedWallet.terraAddress,
+              "max_spread": "0",
+              "offer_asset": {
+                "info": {
+                  "native_token": {
+                    "denom": "uusd"
+                  }
+                },
+                "amount": (swapValue.assetFrom.amount*1000000).toString()
+              },
+              "belief_price": "123"
+            }
+          }, // handle msg
+        { uusd: swapValue.assetFrom.amount*1000000 } // coins
+      )
+    }
+    
+      
+      connectedWallet.sign({
+        msgs: [execute]
+      }).then((nextSignResult) => {
+        setSignResult(nextSignResult);
+
+        // broadcast
+        const tx = nextSignResult.result;
+
+        const lcd = createLCDClient({ network: connectedWallet.network });
+
+        return lcd.tx.broadcastSync(tx);
+      })
+      .then((nextTxResult) => {
+        setNotifications([...notifications,{txHash:nextTxResult.txhash}])
+      })
+      .catch((error) => {
+        if (error instanceof UserDenied) {
+          console.error('User Denied');
+        } else if (error instanceof CreateTxFailed) {
+          console.error('Create Tx Failed: ' + error.message);
+          setErrorMessage(error.message)
+        } else if (error instanceof TxFailed) {
+          console.error('Tx Failed: ' + error.message);
+          setErrorMessage(error.message)
+        } else if (error instanceof Timeout) {
+          console.error('Timeout');
+        } else if (error instanceof TxUnspecifiedError) {
+          console.error('Unspecified Error: ' + error.message);
+          setErrorMessage(error.message)
+        } else {
+          console.error(
+            'Unknown Error: ' +
+              (error instanceof Error ? error.message : String(error)),
+          );
+        }
+      });
+  }
 
   return (
     <div className='App'>
@@ -172,10 +286,7 @@ function App() {
         <div className='App-header'>
             <SwapSuggestionsContainer suggestions={suggestions}/>
             <ProfileContainer tokens={[{name:'uluna', native:true},
-                                       {name:'uusd', native:true},
-                                       {name:'terra1kc87mu460fwkqte29rquh4hc20m54fxwtsx7gp', native:false},
-                                       {name:'terra1xj49zyqrwpv5k928jwfpfy2ha668nwdgkwlrg3', native:false},
-                                       {name:'terra12hgwnpupflfpuual532wgrxu2gjp0tcagzgx4n', native:false}]}/>
+                                       {name:'uusd', native:true}]}/>
             <div className='asset-selection-container-outer'>
                 <div className='asset-selection-container-inner'>
                     <PairDropdown/>
@@ -194,7 +305,12 @@ function App() {
                     {status === WalletStatus.WALLET_CONNECTED && (
                       <button ref={swapRef} tabIndex="4" 
                       className='swap-button' type="button"
-                      onClick={() => setDialogOpen(true)}>SWAP</button>)}
+                      onClick={() => tryTx()}>SWAP</button>)}
+                    <div className='error-message-container'>
+                      <div className='error-message'>{errorMessage}</div>
+                    </div>
+                    <NotificationsContainer notifications={notifications}
+                                            setNotifications={setNotifications}/>
                 </div>
             </div>
         </div>

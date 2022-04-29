@@ -1,0 +1,51 @@
+
+.type-msg{
+  width: 25%;
+  font-weight: bold;
+}
+
+.msg-content{
+  width: 70%;
+}
+
+.error-box{
+  color: #df4c73;
+  border-color: #df4c73;
+}
+
+.loading-box{
+  color: #ffffff;
+  border-color: #ffffff;
+
+}
+
+.success-box{
+  color: #7ee6a2;
+  border-color: #7ee6a2;
+}
+
+.close-notification-button{
+  font-size: 12px;
+  background: transparent;
+  border: none;
+}
+
+.close-notification-button:hover{
+  cursor: pointer;
+}
+
+.msg-content{
+  justify-content: center;
+  display: flex;
+}
+
+.msg-box{
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  background: #0d1841;
+  margin: 3px;
+  border-radius: 15px;
+  border: solid 0.3px;
+  padding: 16px;
+}

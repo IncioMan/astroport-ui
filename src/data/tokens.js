@@ -52,7 +52,7 @@ module.exports = {
       protocol: "Mars",
       symbol: "MARS",
       name: "Mars",
-      token: "terra1a7zxk56c72elupp7p44hn4k94fsvavnhylhr6h",
+      token: "terra12hgwnpupflfpuual532wgrxu2gjp0tcagzgx4n",
       icon: "https://marsprotocol.io/mars_logo_colored.svg",
       decimals: 6
     },
@@ -668,6 +668,60 @@ module.exports = {
     },
   },
   testnet: {
+    terra16t7x97wuckxm5h927jygjfrt3tcwrzh3u2rlqm :{
+      protocol: "SAYVE",
+      symbol: "SAYVE",
+      name: "SAYVE",
+      token: "terra16t7x97wuckxm5h927jygjfrt3tcwrzh3u2rlqm",
+      icon: "	https://extraterra-assets.s3.us-east-2.amazonaws.com/images/SAYVE100.png",
+      decimals: 6
+    },
+    terra1qs7h830ud0a4hj72yr8f7jmlppyx7z524f7gw6:{
+      protocol: "Mars",
+      symbol: "MARS",
+      name: "Mars",
+      token: "terra1qs7h830ud0a4hj72yr8f7jmlppyx7z524f7gw6",
+      icon: "https://marsprotocol.io/mars_logo_colored.svg",
+      decimals: 6
+    },
+    terra1a0dx9xeh7sh6amn69zxg35twvdm44cghrlh87d :{
+      protocol: "Apollo DAO Token",
+        symbol: "APOLLO",
+        token: "terra1a0dx9xeh7sh6amn69zxg35twvdm44cghrlh87d",
+        icon: "https://extraterra-assets.s3.us-east-2.amazonaws.com/images/APOLLO60.png"
+    },
+    terra1u0t35drzyy0mujj8rkdyzhe264uls4ug3wdp3x:{
+      protocol: "Anchor",
+      symbol: "bLUNA",
+      token: "terra1u0t35drzyy0mujj8rkdyzhe264uls4ug3wdp3x",
+      icon: "https://whitelist.anchorprotocol.com/logo/bLUNA.png"
+    },
+    terra1azu2frwn9a4l6gl5r39d0cuccs4h7xlu9gkmtd:{
+      protocol: "Kujira",
+      symbol: "KUJI",
+      name: "Kujira Token",
+      token: "terra1azu2frwn9a4l6gl5r39d0cuccs4h7xlu9gkmtd",
+      icon: "https://assets.kujira.app/kuji.png"
+    },
+    uusd: {
+      protocol: "Native",
+      symbol: "UST",
+      token: "uusd",
+      icon: 'https://assets.terra.money/icon/60/UST.png'
+    },
+    uluna: {
+        protocol: "Native",
+        symbol: "LUNA",
+        token: "uluna",
+        icon: 'https://assets.terra.money/icon/60/Luna.png'
+    },
+    terra1jqcw39c42mf7ngq4drgggakk3ymljgd3r5c3r5:{
+      protocol: "Astroport",
+      symbol: "ASTRO",
+      name: "Astroport Token",
+      token: "terra1jqcw39c42mf7ngq4drgggakk3ymljgd3r5c3r5",
+      icon: "https://astroport.fi/astro_logo.png",
+    },
     terra1v000amr8a59r88p33ec2kk9xqe047g7zzqqaf4: {
       protocol: "LoTerra",
       symbol: "LOTA",

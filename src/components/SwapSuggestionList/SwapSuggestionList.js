@@ -6,28 +6,43 @@ import SwapContext from '../SwapContainer/SwapContext';
 import pools from '../../data/astroport.dex.js'
 import tokens from '../../data/tokens.js'
 const axios = require('axios').default;
+import { useConnectedWallet, useLCDClient, useWallet, WalletStatus} from '@terra-money/wallet-provider';
+
 
 export default function SwapSuggestionList(props) {
     const {title, url} = props
     const {setSwapValue} = useContext(SwapContext);
     const [loaded, setLoaded] = useState(false);
     const [pairs, setPairs] = useState([]);
+    const {network} = useWallet();
+
 
     useEffect(()=>{
-        axios.get(url)
-        .then(function (response) {
-            // handle success
-            setPairs(response.data.map((p)=>p["POOL_ADDRESS"]).filter(p=>Object.keys(pools.mainnet).includes(p)).slice(0,5))
-            setLoaded(true)
-        })
-        .catch(function (error) {
-            // handle error
-            console.log(error);
-        })
-        .then(function () {
-            // always executed
-        });
-    })
+        if(network&&network.name=='testnet'){
+            setPairs(['terra1ec0fnjk2u6mms05xyyrte44jfdgdaqnx0upesr',
+                        'terra13r3vngakfw457dwhw9ef36mc8w6agggefe70d9',
+                        'terra1x23y2hxpxph6wueyqj5m5grlr23z5dt4wvpn0r',
+                        'terra1z7250szwg9khf20a72r2u7qv2l4ndghkhhp4ev',
+                        'terra1af47e4tl5gapkqr45vvxx7nygg5f9qkecjvpdm',
+                        'terra1esle9h9cjeavul53dqqws047fpwdhj6tynj5u4',
+                        'terra178na9upyad7gu4kulym9uamwafgrf922yln76l'])
+        }
+        else{
+            axios.get(url)
+            .then(function (response) {
+                // handle success
+                setPairs(response.data.map((p)=>p["POOL_ADDRESS"]).filter(p=>Object.keys(pools.mainnet).includes(p)).slice(0,5))
+                setLoaded(true)
+            })
+            .catch(function (error) {
+                // handle error
+                console.log(error);
+            })
+            .then(function () {
+                // always executed
+            });
+        }
+    }, [network])
 
     return (
         <div className='suggestion-category-name-outer'>
@@ -38,9 +53,10 @@ export default function SwapSuggestionList(props) {
             }
             {
                 loaded && pairs.map((pair) => {
-                const pool = pools.mainnet[pair]
-                const assetFrom = tokens.mainnet[pool.assets[0]]
-                const assetTo = tokens.mainnet[pool.assets[1]]
+                const pool = pools[network.name][pair]
+                if(!pool){return}
+                const assetFrom = tokens[network.name][pool.assets[0]]
+                const assetTo = tokens[network.name][pool.assets[1]]
                 return <SwapSuggestion 
                     key={pair}
                     asset1={assetFrom.symbol}
