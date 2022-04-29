@@ -218,6 +218,8 @@ function App() {
         }, { })
     }
     if(pool.assets[1]==swapValue.assetFrom.asset){
+      let coins = {}
+      coins[pool.assets[1]] = swapValue.assetFrom.amount*1000000
       execute = new MsgExecuteContract(
         connectedWallet.terraAddress, // sender
         swapValue.pool, // contract account address
@@ -228,7 +230,7 @@ function App() {
               "offer_asset": {
                 "info": {
                   "native_token": {
-                    "denom": "uusd"
+                    "denom": pool.assets[1]
                   }
                 },
                 "amount": (swapValue.assetFrom.amount*1000000).toString()
@@ -236,7 +238,7 @@ function App() {
               "belief_price": "123"
             }
           }, // handle msg
-        { uusd: swapValue.assetFrom.amount*1000000 } // coins
+        coins // coins
       )
     }
     

@@ -41,31 +41,35 @@ export default function NotificationBox(props) {
     return (
         <>
         {(!txVerifed)&&
-            (<div className='msg-box loading-box' >
-                <div className='type-msg'>
-                Validating tx:
-                </div>
+            (<div className='msg-box loading-box loading' >
+                <a target="_blank" href={'https://terrasco.pe/'+network.name+'/tx/'+txHash}>
+                    <div className='type-msg loading'>
+                    Validating tx:
+                    </div>
+                </a>
                 <div className='msg-content'>
                     <TailSpin className="loading-tx" height="20" width="20" color='#ffffff'ariaLabel='loading'/>
                 </div>
-                <button className='close-notification-button loading-box' onClick={()=>onClose(txHash)}>&#10005;</button>
+                <button className='close-notification-button loading loading-box' onClick={()=>onClose(txHash)}>&#10005;</button>
             </div>)
         }
         {
         (txVerifed) &&
-            (<div className='msg-box success-box' >
-                <div className='type-msg'>
-                Success:
-                </div>
+            (<div className='msg-box success-box success'>
+                <a target="_blank" href={'https://terrasco.pe/'+network.name+'/tx/'+txHash}>
+                    <div className='type-msg success'>
+                    Success:
+                    </div>
+                </a>
                 <div className='msg-content'>
                  {content}
                 </div>
-                <button className='close-notification-button success-box' onClick={()=>onClose(txHash)}>&#10005;</button>
+                <button className='close-notification-button success success-box' onClick={()=>onClose(txHash)}>&#10005;</button>
             </div>)
         }
         {
             (txVerifed)&&(txHash==2)&&
-            (<div className='msg-box error-box'  onClick={()=>onClose(txHash)}>
+            (<div className='msg-box error-box error'  onClick={()=>onClose(txHash)}>
                 <div className='type-msg'>
                 Warning:
                 </div>

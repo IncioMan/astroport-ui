@@ -9,19 +9,37 @@
 }
 
 .error-box{
-  color: #df4c73;
   border-color: #df4c73;
 }
 
-.loading-box{
-  color: #ffffff;
-  border-color: #ffffff;
+.error{
+  color: #df4c73;
+}
 
+.loading-box{
+  border-color: #ffffff;
+}
+
+.loading{
+  color: #ffffff;
+}
+
+a .loading{
+  text-decoration: underline;
+  color: #ffffff;
 }
 
 .success-box{
-  color: #7ee6a2;
   border-color: #7ee6a2;
+}
+
+.success{
+  color: #7ee6a2;
+}
+
+a .success{
+  text-decoration: underline;
+  color: #7ee6a2;
 }
 
 .close-notification-button{
@@ -48,4 +66,5 @@
   border-radius: 15px;
   border: solid 0.3px;
   padding: 16px;
+  justify-content: center;
 }

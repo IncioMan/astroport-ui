@@ -20,7 +20,7 @@ module.exports = {
         terra1esle9h9cjeavul53dqqws047fpwdhj6tynj5u4:{
             dex: "astroport",
             type: "xyk",
-            assets: ["terra1u0t35drzyy0mujj8rkdyzhe264uls4ug3wdp3x", "uusd"]
+            assets: ["terra1u0t35drzyy0mujj8rkdyzhe264uls4ug3wdp3x", "uluna"]
         },
         terra178na9upyad7gu4kulym9uamwafgrf922yln76l:{
             dex: "astroport",
