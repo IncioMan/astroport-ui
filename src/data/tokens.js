@@ -668,6 +668,20 @@ module.exports = {
     },
   },
   testnet: {
+    terra1em8dvzln8quptj9tuptf8tu73jyuv5jn6kqdwv: {
+      protocol: "Nexus",
+      symbol: "nETH",
+      name: "Nexus nETH Token",
+      token: "terra1em8dvzln8quptj9tuptf8tu73jyuv5jn6kqdwv",
+      icon: "https://extraterra-assets.s3.us-east-2.amazonaws.com/images/SVG/nETH.svg"
+    },
+    terra18nle009rtynpjgleh2975rleu5zts0zdtqryte: {
+      protocol: "Nexus",
+      symbol: "Psi",
+      name: "Nexus Governance Token",
+      token: "terra18nle009rtynpjgleh2975rleu5zts0zdtqryte",
+      icon: "https://terra.nexusprotocol.app/assets/psi.png"
+    },
     terra16t7x97wuckxm5h927jygjfrt3tcwrzh3u2rlqm :{
       protocol: "SAYVE",
       symbol: "SAYVE",

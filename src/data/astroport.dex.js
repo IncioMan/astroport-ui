@@ -1,5 +1,15 @@
 module.exports = {
     testnet: {
+        terra1a7vcghx2vjyg74nqk5krd9ppa8ks8ytz5vdsgp:{
+            dex: "astroport",
+            type: "xyk",
+            assets: ["terra18nle009rtynpjgleh2975rleu5zts0zdtqryte","uusd"]
+        },
+        terra1mt63aef37fx9z7jfadtgk8a5swxlxce9pjdgvy:{
+            dex: "astroport",
+            type: "xyk",
+            assets: ["terra1em8dvzln8quptj9tuptf8tu73jyuv5jn6kqdwv", "terra18nle009rtynpjgleh2975rleu5zts0zdtqryte"]
+        },
         terra1x23y2hxpxph6wueyqj5m5grlr23z5dt4wvpn0r :{
             dex: "astroport",
             type: "xyk",

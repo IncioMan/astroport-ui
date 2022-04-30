@@ -201,7 +201,7 @@ function App() {
   const [txError, setTxError] = useState(null);
   const tryTx = () => {
     if(network.name!=='testnet'){
-        setNotifications([...notifications,{errorMessage:"Swaps on mainnet are disabled. Please switch to testnet."}])
+        setNotifications([{errorMessage:"Swaps on mainnet are disabled. Please switch to testnet."},...notifications])
         return;
     }
     const pool = pools[network.name]?.[swapValue.pool]
@@ -209,7 +209,7 @@ function App() {
       return
     }
     let execute = null;
-    if(pool.assets[0]==swapValue.assetFrom.asset){
+    if(!['uusd','uluna'].includes(swapValue.assetFrom.asset)){
       execute = new MsgExecuteContract(
         connectedWallet.terraAddress, // sender
         swapValue.assetFrom.asset, // contract account address
@@ -221,7 +221,7 @@ function App() {
           }
         }, { })
     }
-    if(pool.assets[1]==swapValue.assetFrom.asset){
+    else{
       let coins = {}
       coins[pool.assets[1]] = swapValue.assetFrom.amount*1000000
       execute = new MsgExecuteContract(
@@ -260,7 +260,7 @@ function App() {
         return lcd.tx.broadcastSync(tx);
       })
       .then((nextTxResult) => {
-        setNotifications([...notifications,{txHash:nextTxResult.txhash}])
+        setNotifications([{txHash:nextTxResult.txhash}, ...notifications])
       })
       .catch((error) => {
         if (error instanceof UserDenied) {
@@ -268,10 +268,10 @@ function App() {
         } else if (error instanceof CreateTxFailed) {
           console.error('Create Tx Failed: ' + error.message);
           //setErrorMessage(error.message)
-          setNotifications([...notifications,{errorMessage:error.message}])
+          setNotifications([{errorMessage:error.message}, ...notifications,])
         } else if (error instanceof TxFailed) {
           console.error('Tx Failed: ' + error.message);
-          setNotifications([...notifications,{errorMessage:error.message}])
+          setNotifications([{errorMessage:error.message}, ...notifications])
           //setErrorMessage(error.message)
         } else if (error instanceof Timeout) {
           console.error('Timeout');
