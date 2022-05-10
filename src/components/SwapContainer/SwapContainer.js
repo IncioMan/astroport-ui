@@ -4,7 +4,7 @@ import SwapContext from './SwapContext';
 import tokens from '../../data/tokens.js'
 import SwapMetrics from '../SwapMetrics/SwapMetrics'
 import BalancePriceContext from '../BalancePriceContext/BalancePriceContext';
-import SimulationExecutor from '../App/SimulationExecutor';
+import SimulationExecutor from '../Executors/SimulationExecutor';
 import { useConnectedWallet, useLCDClient, useWallet, WalletStatus} from '@terra-money/wallet-provider';
 
 export default function SwapContainer() {
