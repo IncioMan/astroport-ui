@@ -14,13 +14,14 @@ export default class SwapExecutor{
         this.connectedWallet = connectedWallet
     }
 
-    executeSwap = (swapValue, setNotifications, notifications) => {
+    executeSwap = (swapValue, swapRates, setNotifications, notifications) => {
+        console.log(swapRates)
         const pool = pools[this.network.name]?.[swapValue.pool]
         if(!pool){
         return
         }
         let execute = null;
-        let msg_value = '{"swap":{"max_spread":"0.005","belief_price":"'+4.33+'"}}'
+        let msg_value = '{"swap":{"max_spread":"0.005","belief_price":"'+swapRates.from.toString()+'"}}'
         msg_value = btoa(msg_value)
         if(!['uusd','uluna'].includes(swapValue.assetFrom.asset)){
         execute = new MsgExecuteContract(
@@ -52,7 +53,7 @@ export default class SwapExecutor{
                     },
                     "amount": (swapValue.assetFrom.amount*1000000).toString()
                 },
-                "belief_price": "1.1"
+                "belief_price": swapRates.from.toString()
                 }
             }, // handle msg
             coins // coins

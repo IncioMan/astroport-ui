@@ -4,6 +4,7 @@ import SwapContext from './SwapContext';
 import tokens from '../../data/tokens.js'
 import SwapMetrics from '../SwapMetrics/SwapMetrics'
 import BalancePriceContext from '../BalancePriceContext/BalancePriceContext';
+import SimulationProvider from '../App/SimulationProvider';
 import { useConnectedWallet, useLCDClient, useWallet, WalletStatus} from '@terra-money/wallet-provider';
 
 export default function SwapContainer() {
@@ -67,76 +68,8 @@ export default function SwapContainer() {
 
     useEffect(()=>{
         if(lcd){
-            const pool = swapValue.pool
-            const assetFrom = swapValue.assetFrom.asset
-            const assetTo= swapValue.assetTo.asset
-            let query = ''
-            if(['uluna','uusd'].includes(assetFrom)){
-                query = {
-                    "simulation": {
-                        "offer_asset":{
-                            "info":{
-                                "native_token":{
-                                    "denom":assetFrom}
-                            },"amount":"1000000"},
-                    "max_spread":"0.005","belief_price":"90"
-                    }
-                }
-            }
-            else{
-                query = {
-                    "simulation":{
-                        "offer_asset":{
-                            "amount":"1000000",
-                            "info":{
-                                "token":{
-                                    "contract_addr": assetFrom
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            lcd.wasm.contractQuery(pool,
-                query)
-                .then((res)=>{
-                    setSwapRates({from:res.return_amount/1000000})
-                }).catch(function (error) {
-                    console.log(error);
-                })
-            if(['uluna','uusd'].includes(assetTo)){
-                query = {
-                    "simulation": {
-                        "offer_asset":{
-                            "info":{
-                                "native_token":{
-                                    "denom":assetTo}
-                            },"amount":"1000000"},
-                    "max_spread":"0.005","belief_price":"90"
-                    }
-                }
-            }
-            else{
-                query = {
-                    "simulation":{
-                        "offer_asset":{
-                            "amount":"1000000",
-                            "info":{
-                                "token":{
-                                    "contract_addr": assetTo
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            lcd.wasm.contractQuery(pool,
-                query)
-                .then((res)=>{
-                    setSwapRates({to:res.return_amount/1000000})
-                }).catch(function (error) {
-                    console.log(error);
-                })
+            const prov = new SimulationProvider(lcd)
+            prov.simulate(swapValue, setSwapRates)
         }
     },[swapValue])
 

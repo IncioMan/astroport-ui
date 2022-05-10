@@ -14,6 +14,7 @@ import NotificationsContainer from '../NotificationsContainer/NotificationsConta
 const axios = require('axios').default;
 import tokens from '../../data/tokens.js'
 import Dialog from 'react-dialog'
+import SimulationProvider from './SimulationProvider';
 
 const suggestions = [
     {title:'MOST POPULAR',
@@ -85,11 +86,14 @@ function App() {
   const [isDialogOpen, setDialogOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [notifications, setNotifications] = useReducer(setNotificationsReducer,[]);
+  const [swapRates, setSwapRates] = useReducer(SimulationProvider.swapRatesReducer, {from: null, to: null});
   const swapRef = useRef();
   const lcd = useLCDClient();
   const connectedWallet = useConnectedWallet();
 
   useEffect(()=>{
+    const simulation = new SimulationProvider(lcd)
+    simulation.simulate(swapValue, setSwapRates)
     if(swapValue.step === 'swap'){
         swapRef.current.focus()
     }
@@ -185,11 +189,7 @@ function App() {
     })}
   },[network])
 
-  const openDialog = () => setDialogOpen(true)
   const handleClose = () => setDialogOpen(false)
-  const [signResult, setSignResult] = useState(null);
-  const [txResult, setTxResult] = useState(null);
-  const [txError, setTxError] = useState(null);
   const swapExecutor = new SwapExecutor(network, connectedWallet)
 
   return (
@@ -218,7 +218,7 @@ function App() {
                     {status === WalletStatus.WALLET_CONNECTED && (
                       <button ref={swapRef} tabIndex="4" 
                       className='swap-button' type="button"
-                      onClick={() => swapExecutor.executeSwap(swapValue, setNotifications, notifications)}>SWAP</button>)}
+                      onClick={() => swapExecutor.executeSwap(swapValue, swapRates, setNotifications, notifications)}>SWAP</button>)}
                     <div className='error-message-container'>
                       <div className='error-message'>{errorMessage}</div>
                     </div>
