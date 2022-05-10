@@ -7,21 +7,13 @@ import './App.css';
 import React, { useEffect, useReducer, useRef, useState } from 'react';
 import {useConnectedWallet, useLCDClient, useWallet, WalletStatus } from '@terra-money/wallet-provider';
 import { getChainOptions, WalletProvider, } from '@terra-money/wallet-provider';
-import {createLCDClient,
-    CreateTxFailed,
-    SignResult,
-    Timeout,
-    TxFailed,
-    TxUnspecifiedError,
-    UserDenied} from '@terra-money/wallet-provider';
+import SwapExecutor from './SwapExecutor.js';
 import ReactDOM from 'react-dom';
 import BalancePriceContext from '../BalancePriceContext/BalancePriceContext';
 import NotificationsContainer from '../NotificationsContainer/NotificationsContainer';
 const axios = require('axios').default;
 import tokens from '../../data/tokens.js'
 import Dialog from 'react-dialog'
-import { MsgExecuteContract } from '@terra-money/terra.js';
-import pools from '../../data/astroport.dex.js'
 
 const suggestions = [
     {title:'MOST POPULAR',
@@ -33,7 +25,7 @@ const suggestions = [
 
 const swapValueInit = {
     assetFrom: {asset:'uusd',amount:0,amountOwned:0},
-    assetTo: {asset:'uluna'},
+    assetTo: {asset:'uluna', price: 1},
     pool: 'terra1m6ywlgn6wrjuagcmmezzz2a029gtldhey5k552',
     step : 'pair'
 }
@@ -46,9 +38,11 @@ function swapValueReducer(state, value) {
     var amount =  value.amount
     var pool =  value.pool
     var step =  value.step
+    var price =  value.price
     var newValue = {
         assetFrom: {asset: (assetFrom ? assetFrom : state.assetFrom.asset),
-                    amount: (amount? amount : state.assetFrom.amount)},
+                    amount: (amount? amount : state.assetFrom.amount),
+                    price: (price? price : state.assetTo.price)},
         assetTo: {asset: (assetTo ? assetTo : state.assetTo.asset)},
         pool: (pool ? pool : state.pool),
         step: (step ? step : state.step)
@@ -133,9 +127,6 @@ function App() {
             value[token] = {price: null}
             setBalancePrice(value)
         })
-        .then(function () {
-            // always executed
-        });
         if(['uusd','uluna'].includes(token)){
             lcd.bank.balance(connectedWallet.walletAddress).then(([coins]) => {
                 let value = {}
@@ -199,93 +190,7 @@ function App() {
   const [signResult, setSignResult] = useState(null);
   const [txResult, setTxResult] = useState(null);
   const [txError, setTxError] = useState(null);
-  const tryTx = () => {
-    if(network.name!=='testnet'){
-        setNotifications([{errorMessage:"Swaps on mainnet are disabled. Please switch to testnet."},...notifications])
-        return;
-    }
-    const pool = pools[network.name]?.[swapValue.pool]
-    if(!pool){
-      return
-    }
-    let execute = null;
-    if(!['uusd','uluna'].includes(swapValue.assetFrom.asset)){
-      execute = new MsgExecuteContract(
-        connectedWallet.terraAddress, // sender
-        swapValue.assetFrom.asset, // contract account address
-        {
-          "send": {
-            "msg":"eyJzd2FwIjp7Im1heF9zcHJlYWQiOiIwLjAxIn19",
-            "amount": (swapValue.assetFrom.amount*1000000).toString(),
-            "contract": swapValue.pool
-          }
-        }, { })
-    }
-    else{
-      let coins = {}
-      coins[pool.assets[1]] = swapValue.assetFrom.amount*1000000
-      execute = new MsgExecuteContract(
-        connectedWallet.terraAddress, // sender
-        swapValue.pool, // contract account address
-        {
-            "swap": {
-              "to": connectedWallet.terraAddress,
-              "max_spread": "0",
-              "offer_asset": {
-                "info": {
-                  "native_token": {
-                    "denom": pool.assets[1]
-                  }
-                },
-                "amount": (swapValue.assetFrom.amount*1000000).toString()
-              },
-              "belief_price": "123"
-            }
-          }, // handle msg
-        coins // coins
-      )
-    }
-    
-      
-      connectedWallet.sign({
-        msgs: [execute]
-      }).then((nextSignResult) => {
-        setSignResult(nextSignResult);
-
-        // broadcast
-        const tx = nextSignResult.result;
-
-        const lcd = createLCDClient({ network: connectedWallet.network });
-
-        return lcd.tx.broadcastSync(tx);
-      })
-      .then((nextTxResult) => {
-        setNotifications([{txHash:nextTxResult.txhash}, ...notifications])
-      })
-      .catch((error) => {
-        if (error instanceof UserDenied) {
-          console.error('User Denied');
-        } else if (error instanceof CreateTxFailed) {
-          console.error('Create Tx Failed: ' + error.message);
-          //setErrorMessage(error.message)
-          setNotifications([{errorMessage:error.message}, ...notifications,])
-        } else if (error instanceof TxFailed) {
-          console.error('Tx Failed: ' + error.message);
-          setNotifications([{errorMessage:error.message}, ...notifications])
-          //setErrorMessage(error.message)
-        } else if (error instanceof Timeout) {
-          console.error('Timeout');
-        } else if (error instanceof TxUnspecifiedError) {
-          console.error('Unspecified Error: ' + error.message);
-          setErrorMessage(error.message)
-        } else {
-          console.error(
-            'Unknown Error: ' +
-              (error instanceof Error ? error.message : String(error)),
-          );
-        }
-      });
-  }
+  const swapExecutor = new SwapExecutor(network, connectedWallet)
 
   return (
     <div className='App'>
@@ -313,7 +218,7 @@ function App() {
                     {status === WalletStatus.WALLET_CONNECTED && (
                       <button ref={swapRef} tabIndex="4" 
                       className='swap-button' type="button"
-                      onClick={() => tryTx()}>SWAP</button>)}
+                      onClick={() => swapExecutor.executeSwap(swapValue, setNotifications, notifications)}>SWAP</button>)}
                     <div className='error-message-container'>
                       <div className='error-message'>{errorMessage}</div>
                     </div>

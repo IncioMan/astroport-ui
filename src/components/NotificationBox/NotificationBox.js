@@ -46,7 +46,7 @@ export default function NotificationBox(props) {
         {(!txVerifed)&&(!errorMessage)&&
             (<div className='msg-box loading-box loading' >
                 <a target="_blank" href={'https://terrasco.pe/'+network.name+'/tx/'+txHash}>
-                    <div className='type-msg loading'>
+                    <div className='type-msg link-loading loading'>
                     Validating tx:
                     </div>
                 </a>

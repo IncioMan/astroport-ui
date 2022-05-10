@@ -151,7 +151,8 @@ export default function SwapContainer() {
                         setSwapValue({
                             assetFrom: swapValue.assetTo.asset,
                             assetTo:swapValue.assetFrom.asset,
-                            step: 'amount'
+                            step: 'amount',
+                            price: swapRates.to
                         })
                     }}
                     onKeyUp = {(e) =>{
@@ -159,7 +160,8 @@ export default function SwapContainer() {
                             setSwapValue({
                                 assetFrom: swapValue.assetTo.asset,
                                 assetTo: swapValue.assetFrom.asset,
-                                step: 'amount'
+                                step: 'amount',
+                                price: swapRates.to
                             })
                         }
                     }}>&rarr;</div>
