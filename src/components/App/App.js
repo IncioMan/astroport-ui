@@ -14,7 +14,7 @@ import NotificationsContainer from '../NotificationsContainer/NotificationsConta
 const axios = require('axios').default;
 import tokens from '../../data/tokens.js'
 import Dialog from 'react-dialog'
-import SimulationProvider from './SimulationProvider';
+import SimulationExecutor from './SimulationExecutor';
 
 const suggestions = [
     {title:'MOST POPULAR',
@@ -86,13 +86,13 @@ function App() {
   const [isDialogOpen, setDialogOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [notifications, setNotifications] = useReducer(setNotificationsReducer,[]);
-  const [swapRates, setSwapRates] = useReducer(SimulationProvider.swapRatesReducer, {from: null, to: null});
+  const [swapRates, setSwapRates] = useReducer(SimulationExecutor.swapRatesReducer, {from: null, to: null});
   const swapRef = useRef();
   const lcd = useLCDClient();
   const connectedWallet = useConnectedWallet();
 
   useEffect(()=>{
-    const simulation = new SimulationProvider(lcd)
+    const simulation = new SimulationExecutor(lcd)
     simulation.simulate(swapValue, setSwapRates)
     if(swapValue.step === 'swap'){
         swapRef.current.focus()

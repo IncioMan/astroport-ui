@@ -1,14 +1,4 @@
-import {createLCDClient,
-    CreateTxFailed,
-    SignResult,
-    Timeout,
-    TxFailed,
-    TxUnspecifiedError,
-    UserDenied} from '@terra-money/wallet-provider';
-import { MsgExecuteContract } from '@terra-money/terra.js';
-import pools from '../../data/astroport.dex.js'
-
-export default class SimulationProvider{
+export default class SimulationExecutor{
     constructor(lcd){
         this.lcd = lcd
     }
