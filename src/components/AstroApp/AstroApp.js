@@ -84,14 +84,14 @@ function AstroApp() {
   const [isDialogOpen, setDialogOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [notifications, setNotifications] = useReducer(setNotificationsReducer,[]);
-  const [swapRates, setSwapRates] = useReducer(SimulationExecutor.swapRatesReducer, {from: null, to: null});
+  const [basePrice, setBasePrice] = useState(0);
   const swapRef = useRef();
   const lcd = useLCDClient();
   const connectedWallet = useConnectedWallet();
 
   useEffect(()=>{
     const simulation = new SimulationExecutor(lcd)
-    simulation.simulate(swapValue, setSwapRates)
+    simulation.simulateBasePrice(swapValue, network, setBasePrice)
     if(swapValue.step === 'swap'){
         swapRef.current.focus()
     }
@@ -216,7 +216,7 @@ function AstroApp() {
                     {status === WalletStatus.WALLET_CONNECTED && (
                       <button ref={swapRef} tabIndex="4" 
                       className='swap-button' type="button"
-                      onClick={() => swapExecutor.executeSwap(swapValue, swapRates, setNotifications, notifications)}>SWAP</button>)}
+                      onClick={() => swapExecutor.executeSwap(swapValue, basePrice, setNotifications, notifications)}>SWAP</button>)}
                     <div className='error-message-container'>
                       <div className='error-message'>{errorMessage}</div>
                     </div>

@@ -1,3 +1,4 @@
+import pools from '../../data/astroport.dex.js'
 export default class SimulationExecutor{
     constructor(lcd){
         this.lcd = lcd
@@ -12,6 +13,44 @@ export default class SimulationExecutor{
             to: value.to ? value.to : state.to
         }
         return newValue
+    }
+
+    simulateBasePrice(swapValue, network, setBasePrice){
+        const pool = pools[network.name]?.[swapValue.pool]
+        const assetTo = pool.assets[1]
+        let query = ''
+        if(['uluna','uusd'].includes(assetTo)){
+            query = {
+                "simulation": {
+                    "offer_asset":{
+                        "info":{
+                            "native_token":{
+                                "denom":assetTo}
+                        },"amount":"1000000"},
+                "max_spread":"0.005","belief_price":"90"
+                }
+            }
+        }
+        else{
+            query = {
+                "simulation":{
+                    "offer_asset":{
+                        "amount":"1000000",
+                        "info":{
+                            "token":{
+                                "contract_addr": assetTo
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        this.lcd.wasm.contractQuery(swapValue.pool,query)
+            .then((res)=>{
+                setBasePrice(res.return_amount/1000000)
+            }).catch(function (error) {
+                console.log(error);
+            })
     }
 
     simulate(swapValue, setSwapRates){
