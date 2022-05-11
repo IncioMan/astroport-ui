@@ -1,0 +1,182 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.App-header {
+  background-color: #000d37;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+body {
+  background-color: #FDF6EC;
+}
+
+
+.asset-container{
+  display: flex;
+  align-items: center;
+}
+
+
+
+.arrow-container{
+  display: flex;
+  align-items: end;
+  padding: 0px 20px;
+}
+
+
+
+@media (max-width:480px) {
+  .arrow-container{
+    padding: 0px 5px;
+  }
+  .close-dialog-button{
+    right: 20% !important;
+  }
+  .ui-dialog{
+    font-size: 13px;
+  }
+}
+
+.twitter-logo{
+  color: black;
+}
+
+.ui-dialog-container {
+  position: fixed;
+    top: 77%;
+    left: 50%;
+}
+
+
+.ui-dialog-content {
+overflow-y: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.close-dialog-button:hover{
+  cursor: pointer;
+}
+.close-dialog-button{
+  position: absolute;
+    right: 24px;
+    background: transparent;
+    font-size: 20px;
+    border: none;
+    top: 20px;
+}
+
+.ui-dialog{
+  position: absolute;
+  background: #5544f2;
+  opacity: 95%;
+  color: white;
+  border-radius: 50px;
+  top: -105px;
+}
+
+.swap-container {
+  display: flex;
+  padding-bottom: 30px;
+  font-size: 34px;
+}
+
+.asset-selection-container-outer{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.asset-selection-container-inner{
+    max-width: 600px;
+    position: absolute;
+    top: 25%;
+}
+
+.error-message-container{
+    overflow: auto;
+    max-width: 380px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.error-message{
+  font-size: 16px;
+    padding-top: 10px;
+    color: #df4c73;
+}
+
+input {
+    outline: 0;
+    border-width: 0 0 2px;
+    border-color: white;
+    background-color: transparent;
+    opacity: 0.5;
+    color: white;
+    text-align: center;
+    width: 75%;
+    height: 30px;
+    font-size: 25px;
+}
+input:focus {
+    opacity: 1;
+}
+input::placeholder {
+    font-size: 20px;
+}
+
+input:focus::placeholder {
+    color: grey;
+    opacity: 0.7;
+}
+
+.arrow-button{
+    cursor: pointer;
+}
+.arrow-button:active{
+    opacity: 0.7;
+}
+
+.asset-selection-container{
+    padding-top: 70px;
+    padding-bottom: 70px;
+    position: relative;
+    align-items: center;
+}
+
+
+
+.swap-button{
+    background-color: #5643f2;
+    color: white;
+    border-radius: 100px;
+    border-color: transparent;
+    padding: 10px 30px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.swap-button:active{
+    opacity: 0.7;
+}
+
+.swap-button:focus-visible{
+    outline: none;
+    border: solid;
+    border-width: 2px;
+}
